@@ -15,38 +15,25 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $id_reservation = null;
-
-    #[ORM\Column]
     private ?\DateTime $date_debut = null;
 
     #[ORM\Column]
     private ?\DateTime $date_fin = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $prix = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $id_user = null;
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $id_user = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $id_vehicule = null;
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Vehicule $id_vehicule = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdReservation(): ?int
-    {
-        return $this->id_reservation;
-    }
-
-    public function setIdReservation(int $id_reservation): static
-    {
-        $this->id_reservation = $id_reservation;
-
-        return $this;
     }
 
     public function getDateDebut(): ?\DateTime
@@ -78,31 +65,31 @@ class Reservation
         return $this->prix;
     }
 
-    public function setPrix(?string $prix): static
+    public function setPrix(string $prix): static
     {
         $this->prix = $prix;
 
         return $this;
     }
 
-    public function getIdUser(): ?int
+    public function getIdUser(): ?User
     {
         return $this->id_user;
     }
 
-    public function setIdUser(?int $id_user): static
+    public function setIdUser(?User $id_user): static
     {
         $this->id_user = $id_user;
 
         return $this;
     }
 
-    public function getIdVehicule(): ?int
+    public function getIdVehicule(): ?Vehicule
     {
         return $this->id_vehicule;
     }
 
-    public function setIdVehicule(?int $id_vehicule): static
+    public function setIdVehicule(?Vehicule $id_vehicule): static
     {
         $this->id_vehicule = $id_vehicule;
 

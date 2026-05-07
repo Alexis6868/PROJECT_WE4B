@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EntrepotRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EntrepotRepository::class)]
@@ -13,30 +15,26 @@ class Entrepot
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $id_entrepot = null;
-
     #[ORM\Column(length: 255)]
     private ?string $adresse = null;
 
     #[ORM\Column]
     private ?int $capacite = null;
 
+    /**
+     * @var Collection<int, Vehicule>
+     */
+    #[ORM\OneToMany(targetEntity: Vehicule::class, mappedBy: 'entrepot')]
+    private Collection $vehicules;
+
+    public function __construct()
+    {
+        $this->vehicules = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdEntrepot(): ?int
-    {
-        return $this->id_entrepot;
-    }
-
-    public function setIdEntrepot(int $id_entrepot): static
-    {
-        $this->id_entrepot = $id_entrepot;
-
-        return $this;
     }
 
     public function getAdresse(): ?string
@@ -59,6 +57,36 @@ class Entrepot
     public function setCapacite(int $capacite): static
     {
         $this->capacite = $capacite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vehicule>
+     */
+    public function getVehicules(): Collection
+    {
+        return $this->vehicules;
+    }
+
+    public function addVehicule(Vehicule $vehicule): static
+    {
+        if (!$this->vehicules->contains($vehicule)) {
+            $this->vehicules->add($vehicule);
+            $vehicule->setEntrepot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVehicule(Vehicule $vehicule): static
+    {
+        if ($this->vehicules->removeElement($vehicule)) {
+            // set the owning side to null (unless already changed)
+            if ($vehicule->getEntrepot() === $this) {
+                $vehicule->setEntrepot(null);
+            }
+        }
 
         return $this;
     }

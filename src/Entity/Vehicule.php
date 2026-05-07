@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VehiculeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VehiculeRepository::class)]
@@ -13,40 +15,54 @@ class Vehicule
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $id_vehicule = null;
+    #[ORM\Column(length: 50)]
+    private ?string $nom = null;
 
-    #[ORM\Column(length: 15, nullable: true)]
+    #[ORM\Column(length: 50)]
     private ?string $type = null;
 
-    #[ORM\Column(length: 1024, nullable: true)]
+    #[ORM\Column(length: 1024)]
     private ?string $image = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 50)]
     private ?string $etat = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
+
+    #[ORM\Column]
     private ?int $masse = null;
 
     #[ORM\Column]
     private ?int $indice_maintenance = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $id_entrepot = null;
+    #[ORM\ManyToOne(inversedBy: 'vehicules')]
+    private ?Entrepot $entrepot = null;
+
+    /**
+     * @var Collection<int, Reservation>
+     */
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'id_vehicule')]
+    private Collection $reservations;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdVehicule(): ?int
+    public function getNom(): ?string
     {
-        return $this->id_vehicule;
+        return $this->nom;
     }
 
-    public function setIdVehicule(int $id_vehicule): static
+    public function setNom(string $nom): static
     {
-        $this->id_vehicule = $id_vehicule;
+        $this->nom = $nom;
 
         return $this;
     }
@@ -56,7 +72,7 @@ class Vehicule
         return $this->type;
     }
 
-    public function setType(?string $type): static
+    public function setType(string $type): static
     {
         $this->type = $type;
 
@@ -68,7 +84,7 @@ class Vehicule
         return $this->image;
     }
 
-    public function setImage(?string $image): static
+    public function setImage(string $image): static
     {
         $this->image = $image;
 
@@ -80,9 +96,21 @@ class Vehicule
         return $this->etat;
     }
 
-    public function setEtat(?string $etat): static
+    public function setEtat(string $etat): static
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -92,7 +120,7 @@ class Vehicule
         return $this->masse;
     }
 
-    public function setMasse(?int $masse): static
+    public function setMasse(int $masse): static
     {
         $this->masse = $masse;
 
@@ -111,14 +139,44 @@ class Vehicule
         return $this;
     }
 
-    public function getIdEntrepot(): ?int
+    public function getEntrepot(): ?Entrepot
     {
-        return $this->id_entrepot;
+        return $this->entrepot;
     }
 
-    public function setIdEntrepot(?int $id_entrepot): static
+    public function setEntrepot(?Entrepot $entrepot): static
     {
-        $this->id_entrepot = $id_entrepot;
+        $this->entrepot = $entrepot;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setIdVehicule($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getIdVehicule() === $this) {
+                $reservation->setIdVehicule(null);
+            }
+        }
 
         return $this;
     }

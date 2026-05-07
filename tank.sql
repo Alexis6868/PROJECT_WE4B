@@ -67,15 +67,13 @@ CREATE TABLE `reservation` (
 -- Structure de la table `utilisateur`
 --
 
-CREATE TABLE `utilisateur` (
+CREATE TABLE `user` (
   `id_user` int NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
-  `mail` varchar(100) NOT NULL,
-  `telephone` varchar(20) DEFAULT NULL,
-  `mot_de_passe` varchar(255) NOT NULL,
-  `a2f` tinyint(1) DEFAULT '0',
-  `role` enum('client','employe','admin') NOT NULL
+  `email` varchar(100) NOT NULL,
+  `tel` varchar(20) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
