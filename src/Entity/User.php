@@ -53,6 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->roles = ['ROLE_ADMIN'];
     }
 
     public function getId(): ?int
