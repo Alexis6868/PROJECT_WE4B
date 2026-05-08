@@ -8,7 +8,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>id</th>
+                <th>Nom</th>
                 <th>Date_debut</th>
                 <th>Date_fin</th>
                 <th>Prix</th>
@@ -19,7 +20,8 @@
         {% for reservation in reservations %}
             <tr>
                 <td>{{ reservation.id }}</td>
-                <td>{{ reservation.dateDebut ? reservation.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ reservation.idVehicule.nom }}</td>
+                <td>{{reservation.dateDebut ? reservation.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ reservation.dateFin ? reservation.dateFin|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ reservation.prix }}</td>
                 <td>
@@ -35,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_reservation_new') }}">Create new</a>
+    <a href="{{ path('app_catalogue') }}">Create new</a>
 {% endblock %}

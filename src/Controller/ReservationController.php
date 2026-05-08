@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Reservation;
+use App\Entity\Vehicule;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,36 +12,73 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin/reservation')]
+#[Route('/reservation')]
 final class ReservationController extends AbstractController
 {
     #[Route(name: 'app_reservation_index', methods: ['GET'])]
     public function index(ReservationRepository $reservationRepository): Response
     {
+        $id_user = $this->getUser();
 
+        // Si le rôle admin est affecté cela affiche toutes les réservation
         if ($this->isGranted('ROLE_ADMIN')) {
-        $reservation->$reservationRepository->findAll();}
+            $reservations = $reservationRepository->findAll();
+        } 
+        //Sinon uniquement celle de l'utilisateur connecté
         else {
-        $reservation->$reservationRepository->findBy(['id_user' => $this->getUser()]);
+            $reservations = $reservationRepository->findBy(['id_user' => $id_user]);
         }
-        
 
         return $this->render('reservation/index.html.twig', [
-            'reservations' => $reservationRepository->findAll(),
+            'reservations' => $reservations,
+            'is_admin' => $this->isGranted('ROLE_ADMIN'),
         ]);
     }
+
+
+
 
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $reservation = new Reservation();
 
+        //Recuperation de l'ID du parametre de l'URL
+        $id_vehicule = $request->query->get('id_vehicule');
+        if ($id_vehicule) {
+            $vehicule = $entityManager->getRepository(Vehicule::class)->find($id_vehicule);
+            $reservation->setIdVehicule($vehicule);
+        }
+
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+        $debut = $reservation->getDateDebut();
+        $fin = $reservation->getDateFin();
+
+            if (($fin < $debut) || ($debut < new \DateTime())) {
+                $this->addFlash('error', 'La date de fin doit être supérieure à la date de début.');
+                return $this->render('reservation/new.html.twig', [
+                    'reservation' => $reservation,
+                    'form' => $form,
+                ]);
+            }
+
+
+            
+            $interval = $debut->diff($fin);
+            $jours = $interval->days + 1;
+            $prix = '1000' * $jours;
+
+
+            $reservation->setPrix($prix);
+            $reservation->setIdUser($this->getUser());
+
             $entityManager->persist($reservation);
             $entityManager->flush();
+         
 
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
         }
