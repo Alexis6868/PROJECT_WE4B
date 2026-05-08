@@ -180,4 +180,21 @@ class Vehicule
 
         return $this;
     }
+
+    public function findTanksEnAlerte(): array
+{
+    
+    $conn = $this->getEntityManager()->getConnection();
+
+    $sql = '
+        SELECT v.type, v.indice_maintenance, e.adresse 
+        FROM vehicule v
+        INNER JOIN entrepot e ON v.id_entrepot = e.id
+        WHERE v.indice_maintenance < 50
+        ORDER BY v.indice_maintenance ASC
+    ';
+
+    $resultSet = $conn->executeQuery($sql);
+    return $resultSet->fetchAllAssociative();
+}
 }
