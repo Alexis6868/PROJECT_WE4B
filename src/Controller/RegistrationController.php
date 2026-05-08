@@ -36,7 +36,7 @@ class RegistrationController extends AbstractController
 
 
 
-            return $this->redirectToRoute('app_utilisateur_index');
+            return $this->redirectToRoute('app_catalogue');
         }
 
         return $this->render('registration/register.html.twig', [

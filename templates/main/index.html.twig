@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+<style>
+    /* Section Héro spéciale Mariage */
+    .hero-wedding {
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                    url('https://images.unsplash.com/photo-1511210352280-30f5699098d3?q=80&w=2070&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        padding: 120px 20px;
+        text-align: center;
+        color: white;
+        border-radius: 15px;
+        margin-bottom: 40px;
+    }
+
+    .hero-wedding h1 {
+        font-size: 3.5rem;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+    }
+
+    .hero-wedding h1 span {
+        color: #e67e22; /* Ton orange de tout à l'heure */
+    }
+
+    .hero-wedding p {
+        font-size: 1.4rem;
+        max-width: 800px;
+        margin: 0 auto 2rem;
+        font-style: italic;
+    }
+
+    .btn-wedding {
+        background: #e67e22;
+        color: white;
+        padding: 18px 45px;
+        font-size: 1.3rem;
+        font-weight: 800;
+        border-radius: 50px;
+        display: inline-block;
+        transition: 0.3s;
+        box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);
+    }
+
+    .btn-wedding:hover {
+        background: #d35400;
+        transform: scale(1.05);
+        color: white;
+    }
+
+    .joke-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 60px;
+    }
+
+    .joke-card {
+        background: #fdf2e9;
+        padding: 30px;
+        border-radius: 10px;
+        border-left: 5px solid #e67e22;
+    }
+</style>
+
+<div class="hero-wedding">
+    <h1>Dites « OUI » avec <span>60 tonnes</span> de romantisme !</h1>
+    <p>« Parce qu'une limousine, c'est pour les petits joueurs qui ont peur de la belle-famille. »</p>
+    
+    <a href="{{ path('app_catalogue') }}" class="btn-wedding">
+        TROUVER MON CHAR DE MARIAGE
+    </a>
+</div>
+
+<div class="joke-section">
+    <div class="joke-card">
+        <h3>Entrée fracassante</h3>
+        <p>Garanti sans rayures sur la robe de mariée (mais on ne garantit pas l'état du parking de l'église).</p>
+    </div>
+    <div class="joke-card">
+        <h3>Belle-famille gérée</h3>
+        <p>Un canon de 120mm est l'argument ultime pour calmer les débats sur le plan de table.</p>
+    </div>
+    <div class="joke-card">
+        <h3>Photos uniques</h3>
+        <p>Oubliez les colombes, lancez des obus fumigènes rose paillette pour l'ouverture du bal !</p>
+    </div>
+</div>
+
+{% endblock %}
