@@ -100,6 +100,26 @@ header {
     margin: 0 auto;
 }
 
+.flash-message {
+    max-width: 1080px;
+    margin: 0 auto 18px;
+    padding: 14px 18px;
+    color: var(--text-light);
+    border-radius: 10px;
+    box-shadow: var(--shadow-soft);
+    font-weight: 800;
+}
+
+.flash-success {
+    color: var(--deep-green);
+    background: var(--malachite);
+}
+
+.flash-error,
+.flash-danger {
+    background: var(--danger);
+}
+
 footer {
     border-top: 1px solid var(--border-green);
 }

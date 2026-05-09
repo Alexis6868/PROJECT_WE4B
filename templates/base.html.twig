@@ -49,17 +49,15 @@
         </header>
 
         <main class="main-content">
-            {% block body %}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-message flash-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
 
-            // Affichage des messages flash (succès, erreurs, etc.)
-{% for label, messages in app.flashes %}
-    {% for message in messages %}
-        <div style="background: #e74c3c; color: white; padding: 10px; margin-bottom: 20px;">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endfor %}
-            {% endblock %}
+            {% block body %}{% endblock %}
         </main>
 
         <footer>
@@ -70,7 +68,7 @@
                 </div>
                 <div class="footer-section">
                     <h4>Contact</h4>
-                    <p>📍 Zone Militaire Alpha, France</p>
+                    <p>Avenue du Maréchal Foch 95625, France</p>
                 </div>
             </div>
             <div class="footer-bottom" style="text-align: center; border-top: 1px solid #333; margin-top: 10px; padding-top: 10px;">

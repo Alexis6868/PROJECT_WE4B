@@ -10,10 +10,6 @@
         <p>Sélectionnez vos dates de location. Le prix sera calculé automatiquement lors de la validation.</p>
     </div>
 
-    {% for message in app.flashes('error') %}
-        <div class="login-alert">{{ message }}</div>
-    {% endfor %}
-
     {% if reservation.idVehicule %}
         <div class="reservation-selected-card">
             <img src="{{ reservation.idVehicule.image }}" alt="{{ reservation.idVehicule.nom }}">
