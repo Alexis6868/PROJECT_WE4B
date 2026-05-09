@@ -24,7 +24,7 @@
             <nav class="navbar">
                 <div class="logo">
                     <a href="{{ path('app_main') }}" style="font-size: 1.6rem; color: white; font-weight: 800; text-decoration: none;">
-                        TANK<span style="color: #e67e22;">RENT</span>
+                        TANK<span style="color: #29e622;">RENT</span>
                     </a>
                 </div>
                 <ul class="nav-links">
@@ -33,7 +33,9 @@
                     {% if app.user %}
                         <li><a href="{{ path('app_reservation_index') }}">Mes Réservations</a></li>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li><a href="/admin/vehicule" class="btn-admin">🛠 Admin</a></li>
+                            <li><a href="{{ path('app_vehicule_index') }}" class="btn-admin">Vehicules</a></li>
+                            <li><a href="{{ path('app_reservation_index') }}" class="btn-admin">Réservations</a></li>
+                            <li><a href="{{ path('app_entrepot_index') }}" class="btn-admin">Entrepôts</a></li>                            
                         {% endif %}
                         <li><a href="{{ path('app_logout') }}" style="color: #95a5a6;">Déconnexion</a></li>
                     {% else %}
@@ -45,7 +47,17 @@
         </header>
 
         <main class="main-content">
-            {% block body %}{% endblock %}
+            {% block body %}
+
+            // Affichage des messages flash (succès, erreurs, etc.)
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div style="background: #e74c3c; color: white; padding: 10px; margin-bottom: 20px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+            {% endblock %}
         </main>
 
         <footer>

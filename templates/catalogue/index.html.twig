@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cards.forEach(card => {
             const tankName = card.getAttribute('data-search').toLowerCase();
             const tankStatus = card.getAttribute('data-etat').toLowerCase();
+            const tankNom = card.getAttribute('data-nom').toLowerCase();
 
             const matchesSearch = tankName.includes(searchTerm);
             const matchesStatus = (selectedStatus === 'all' || tankStatus === selectedStatus);
