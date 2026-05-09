@@ -75,10 +75,12 @@ final class ReservationController extends AbstractController
 
             $reservation->setPrix($prix);
             $reservation->setIdUser($this->getUser());
+            $reservation->getIdVehicule()?->setEtat('Réservé');
 
             $entityManager->persist($reservation);
             $entityManager->flush();
-         
+
+            $this->addFlash('success', 'Votre réservation a bien été enregistrée.');
 
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
         }

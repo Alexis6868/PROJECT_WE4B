@@ -1,0 +1,214 @@
+/*-----Pour Page de connexion--------------------------------*/
+    .login-page {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 64px 24px;
+    }
+
+    .login-panel {
+        width: min(100%, 960px);
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        overflow: hidden;
+        background: var(--paper-soft);
+        border: 1px solid var(--border-green);
+        border-radius: 14px;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .login-intro {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 48px;
+        color: var(--text-light);
+        background:
+            repeating-linear-gradient(
+                135deg,
+                var(--line-light) 0 2px,
+                transparent 2px 20px
+            ),
+            linear-gradient(135deg, var(--header-green), var(--black-forest));
+    }
+
+    .signin-page .login-intro {
+        background:
+            linear-gradient(rgba(3, 23, 13, 0.72), rgba(3, 23, 13, 0.72)),
+            url('https://images.pexels.com/photos/15562597/pexels-photo-15562597.jpeg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .login-kicker {
+        margin: 0 0 14px;
+        color: var(--malachite);
+        font-size: 0.85rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .login-intro h1 {
+        margin: 0 0 18px;
+        font-size: 2.3rem;
+        line-height: 1.1;
+    }
+
+    .login-intro p:last-child {
+        margin: 0;
+        color: var(--text-light);
+        line-height: 1.7;
+    }
+
+    .login-form {
+        padding: 48px;
+        background: var(--paper-soft);
+    }
+
+    .login-alert {
+        margin-bottom: 22px;
+        padding: 14px 16px;
+        color: var(--text-light);
+        background: var(--danger);
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+    .login-alert a {
+        color: var(--text-light);
+        font-weight: 800;
+    }
+
+    .form-field {
+        margin-bottom: 20px;
+    }
+
+    .form-field label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--black-forest);
+        font-weight: 800;
+    }
+
+    .form-field input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px 16px;
+        color: var(--text-dark);
+        background: var(--paper-section);
+        border: 1px solid var(--border-dark-green);
+        border-radius: 8px;
+        font-size: 1rem;
+    }
+
+    .form-field input:focus {
+        outline: none;
+        border-color: var(--malachite);
+        box-shadow: var(--focus-ring);
+    }
+
+    .remember-choice {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 4px 0 28px;
+        color: var(--text-body);
+        font-weight: 700;
+    }
+
+    .remember-choice input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--sea-green);
+    }
+
+    .login-submit {
+        width: 100%;
+        border: 0;
+        cursor: pointer;
+    }
+
+    @media (max-width: 760px) {
+        .login-page {
+            padding: 32px 14px;
+        }
+
+        .login-panel {
+            grid-template-columns: 1fr;
+        }
+
+        .login-intro,
+        .login-form {
+            padding: 32px 24px;
+        }
+
+        .login-intro h1 {
+            font-size: 1.9rem;
+        }
+    }
+
+/*-----Pour Page d'inscription--------------------------------*/
+    .register-page {
+        padding: 64px 24px;
+    }
+
+    .register-panel {
+        grid-template-columns: 0.9fr 1.1fr;
+    }
+
+    .register-page .login-intro {
+        background:
+            linear-gradient(rgba(3, 23, 13, 0.72), rgba(3, 23, 13, 0.72)),
+            url('https://images.pexels.com/photos/31448119/pexels-photo-31448119.jpeg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .register-fields {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 20px;
+    }
+
+    .register-password {
+        grid-column: 1 / -1;
+    }
+
+    .register-form form {
+        margin: 0;
+    }
+
+    .register-form ul {
+        margin: 8px 0 0;
+        padding-left: 18px;
+        color: var(--danger-text);
+        font-weight: 700;
+    }
+
+    .register-terms {
+        align-items: flex-start;
+        margin-top: 8px;
+    }
+
+    .register-terms label {
+        margin: 0;
+        color: var(--text-body);
+    }
+
+    @media (max-width: 760px) {
+        .register-page {
+            margin: -14px calc(50% - 50vw) 0;
+        }
+
+        .register-panel,
+        .register-fields {
+            grid-template-columns: 1fr;
+        }
+
+        .register-password {
+            grid-column: auto;
+        }
+    }
+

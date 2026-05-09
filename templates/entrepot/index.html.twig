@@ -1,37 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Entrepot index{% endblock %}
+{% block title %}Entrepôts{% endblock %}
 
 {% block body %}
-    <h1>Entrepot index</h1>
+<section class="admin-form-page warehouse-page">
+    <div class="admin-form-header">
+        <p class="login-kicker">Administration stockage</p>
+        <h1>Gestion des entrepôts</h1>
+        <p>Suivez les emplacements disponibles, leurs capacités et les zones de stockage de la flotte.</p>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Adresse</th>
-                <th>Capacite</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entrepot in entrepots %}
-            <tr>
-                <td>{{ entrepot.id }}</td>
-                <td>{{ entrepot.adresse }}</td>
-                <td>{{ entrepot.capacite }}</td>
-                <td>
-                    <a href="{{ path('app_entrepot_show', {'id': entrepot.id}) }}">show</a>
-                    <a href="{{ path('app_entrepot_edit', {'id': entrepot.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="admin-toolbar">
+        <a href="{{ path('app_entrepot_new') }}" class="main-cta">Ajouter un entrepôt</a>
+    </div>
 
-    <a href="{{ path('app_entrepot_new') }}">Create new</a>
+    <div class="admin-table-card">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Adresse</th>
+                    <th>Capacité</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entrepot in entrepots %}
+                <tr>
+                    <td>#{{ entrepot.id }}</td>
+                    <td>
+                        <strong>{{ entrepot.adresse }}</strong>
+                    </td>
+                    <td>{{ entrepot.capacite }} véhicules</td>
+                    <td>
+                        <div class="admin-actions">
+                            <a href="{{ path('app_entrepot_show', {'id': entrepot.id}) }}">Voir</a>
+                            <a href="{{ path('app_entrepot_edit', {'id': entrepot.id}) }}">Modifier</a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="admin-empty">Aucun entrepôt enregistré.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
 {% endblock %}

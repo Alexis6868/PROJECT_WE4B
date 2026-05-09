@@ -3,14 +3,31 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
+<div class="home-page textured-page-bg">
 <div class="main-aff">
-    <h1></h1>
-    <p>Location de véhicules blindés pour événements, tournages, reconstitutions et expériences privées.</p>
-    <p>« Depuis 1987, nous agrandissons notre collection pour la partager au plus grand nombre. »</p>
+    <p class="home-kicker">Location de véhicules blindés</p>
+    <h1>TankRent</h1>
+    <p class="home-lead">Des blindés authentiques pour vos événements, tournages, reconstitutions et expériences privées.</p>
+    <p class="home-quote">« Depuis 1987, nous agrandissons notre collection pour la partager au plus grand nombre. »</p>
     
     <a href="{{ path('app_catalogue') }}" class="main-cta">
-        Voir le Catalogue !
+        Voir le catalogue
     </a>
+
+    <div class="home-stats">
+        <div>
+            <strong>1987</strong>
+            <span>collection ouverte au public</span>
+        </div>
+        <div>
+            <strong>Sur mesure</strong>
+            <span>événements, tournages, démonstrations</span>
+        </div>
+        <div>
+            <strong>Encadré</strong>
+            <span>logistique et sécurité préparées</span>
+        </div>
+    </div>
 </div>
 
 <div class="feature-grid">
@@ -24,7 +41,7 @@
     </figure>
 
     <figure class="feature-image feature-image-tall">
-        <img src="https://images.unsplash.com/photo-1516822003754-cca485356ecb?q=80&w=900&auto=format&fit=crop" alt="Événement historique avec véhicules militaires">
+        <img src="https://images.pexels.com/photos/10209506/pexels-photo-10209506.jpeg" alt="Événement historique avec véhicules militaires">
     </figure>
 
     <div class="feature-card">
@@ -45,9 +62,16 @@
 <section class="catalogue-callout">
     <img src="https://images.pexels.com/photos/9250/green-attraction-war-museum.jpg" alt="MBT Leopard 2A5 dans une exposition">
 
-    <a href="{{ path('app_catalogue') }}" class="main-cta">
-        Catalogue
-    </a>
+    <div class="catalogue-callout-content">
+        <p class="home-kicker">Catalogue</p>
+        <h2>Choisissez le blindé adapté à votre mission</h2>
+        <p>Comparez les modèles, leur état et leurs caractéristiques avant de planifier votre réservation.</p>
+
+        <a href="{{ path('app_catalogue') }}" class="main-cta">
+            Explorer la flotte
+        </a>
+    </div>
 </section>
+</div>
 
 {% endblock %}

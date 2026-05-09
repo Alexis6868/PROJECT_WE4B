@@ -1,4 +1,29 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'technical-form reservation-form'}}) }}
+    <div class="technical-form-grid reservation-form-grid">
+        <fieldset class="technical-section">
+            <legend>Période de location</legend>
+
+            <div class="form-field">
+                {{ form_label(form.date_debut, 'Date de début', {'label_attr': {'title': 'Choisissez le premier jour de location du véhicule.'}}) }}
+                {{ form_widget(form.date_debut) }}
+                {{ form_errors(form.date_debut) }}
+            </div>
+
+            <div class="form-field">
+                {{ form_label(form.date_fin, 'Date de fin', {'label_attr': {'title': 'La date de fin doit être après la date de début.'}}) }}
+                {{ form_widget(form.date_fin) }}
+                {{ form_errors(form.date_fin) }}
+            </div>
+        </fieldset>
+
+        <fieldset class="reservation-help technical-section">
+            <legend>À savoir</legend>
+            <p>Le tarif est calculé automatiquement après validation, sur la base du nombre de jours réservés.</p>
+            <p>Les dates passées ne sont pas acceptées et la fin de réservation doit être supérieure au début.</p>
+        </fieldset>
+    </div>
+
+    <div class="technical-actions">
+        <button class="main-cta technical-submit">{{ button_label|default('Valider la réservation') }}</button>
+    </div>
 {{ form_end(form) }}

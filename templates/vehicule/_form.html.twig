@@ -10,7 +10,7 @@
             </div>
 
             <div class="form-field">
-                {{ form_label(form.type, 'Type / modèle', {'label_attr': {'title': 'Exemple : Char moyen, Char lourd, Char léger, Transport, Spétial'}}) }}
+                {{ form_label(form.type, 'Type / modèle')}}
                 {{ form_widget(form.type) }}
                 {{ form_errors(form.type) }}
             </div>
@@ -36,7 +36,7 @@
             <legend>Données techniques</legend>
 
             <div class="form-field">
-                {{ form_label(form.etat, 'État opérationnel', {'label_attr': {'title': 'Exemple : Opérationnel, En maintenance, En panne'}}) }}
+                {{ form_label(form.etat, 'État opérationnel') }}
                 {{ form_widget(form.etat) }}
                 {{ form_errors(form.etat) }}
             </div>

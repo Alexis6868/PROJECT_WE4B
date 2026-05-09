@@ -1,0 +1,284 @@
+/*-----Pour Page d'accueil--------------------------------*/
+    .home-page {
+        padding: 20px max(20px, calc((100vw - 1240px) / 2 + 20px)) 80px;
+    }
+
+    /* Section principale de la page d'accueil */
+    .main-aff {
+        position: relative;
+        overflow: hidden;
+        max-width: 1080px;
+        padding: 104px 28px 56px;
+        text-align: center;
+        color: var(--text-light);
+        margin: 18px auto 54px;
+    }
+
+    .main-aff h1 {
+        font-size: 4.6rem;
+        text-transform: uppercase;
+        margin: 0 0 1.1rem;
+        line-height: 1.1;
+        color: var(--text-light);
+    }
+
+    .home-kicker {
+        margin: 0 0 16px;
+        color: var(--malachite);
+        font-size: 0.85rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .home-lead {
+        font-size: 1.25rem;
+        max-width: 800px;
+        margin: 0 auto 1rem;
+        color: var(--text-light);
+        line-height: 1.7;
+    }
+
+    .home-quote {
+        max-width: 760px;
+        margin: 0 auto 2rem;
+        color: var(--text-light);
+        font-size: 1rem;
+        font-style: italic;
+        line-height: 1.7;
+    }
+
+    .home-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        max-width: 860px;
+        margin: 42px auto 0;
+    }
+
+    .home-stats div {
+        padding: 18px;
+        background: var(--border-dark-green);
+        border: 1px solid var(--border-green);
+        border-radius: 10px;
+    }
+
+    .home-stats strong,
+    .home-stats span {
+        display: block;
+    }
+
+    .home-stats strong {
+        margin-bottom: 6px;
+        color: var(--malachite);
+        font-size: 1.05rem;
+        text-transform: uppercase;
+    }
+
+    .home-stats span {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        line-height: 1.45;
+    }
+
+    .main-cta {
+        background: linear-gradient(135deg, var(--malachite), var(--sea-green));
+        color: var(--deep-green);
+        padding: 16px 42px;
+        font-size: 1.05rem;
+        font-weight: 800;
+        border-radius: 999px;
+        display: inline-block;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        box-shadow: var(--shadow-cta);
+    }
+
+    .main-cta:hover {
+        background: linear-gradient(135deg, var(--malachite-hover), var(--malachite));
+        transform: translateY(-3px);
+        color: var(--deep-green);
+    }
+
+
+
+    
+    /* Grille accueil : 2 colonnes x 3 lignes avec cartes et images mélangées */
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 36px;
+        row-gap: 92px;
+        max-width: 1100px;
+        margin: 54px auto 104px;
+        padding: 0 24px;
+        align-items: start;
+    }
+
+    /* Décalage vertical des éléments pairs pour rendre la grille asymétrique */
+    .feature-grid > :nth-child(even) {
+        transform: translateY(44px);
+    }
+
+    /* Style commun aux cartes texte et aux blocs image */
+    .feature-card,
+    .feature-image {
+        min-height: 300px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--shadow-soft);
+    }
+
+    /* Cartes texte de la section accueil */
+    .feature-card {
+        background: var(--paper-soft);
+        padding: 34px;
+        border-left: 6px solid var(--malachite);
+        box-sizing: border-box;
+    }
+
+    .feature-card h3 {
+        margin-top: 0;
+        color: var(--black-forest);
+        font-size: 1.35rem;
+    }
+
+    .feature-card p {
+        margin-bottom: 0;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--text-body);
+    }
+
+    /* Blocs image de la grille accueil */
+    .feature-image {
+        margin: 0;
+        height: 360px;
+    }
+
+    .feature-image-tall {
+        height: 430px;
+    }
+
+    .feature-image img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition: transform 0.35s ease;
+    }
+
+    .feature-image:hover img {
+        transform: scale(1.04);
+    }
+
+    /* Version mobile : une seule colonne et plus de décalage */
+    @media (max-width: 700px) {
+        .home-page {
+            padding: 14px 14px 56px;
+        }
+
+        .main-aff {
+            padding: 72px 18px 36px;
+            margin-top: 8px;
+        }
+
+        .main-aff h1 {
+            font-size: 2.45rem;
+        }
+
+        .home-lead,
+        .home-quote {
+            font-size: 1rem;
+        }
+
+        .home-stats {
+            grid-template-columns: 1fr;
+            margin-top: 30px;
+        }
+
+        .main-cta {
+            padding: 14px 30px;
+            font-size: 0.95rem;
+        }
+
+        .feature-grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .feature-grid > :nth-child(even) {
+            transform: none;
+        }
+
+        .feature-card,
+        .feature-image,
+        .feature-image-tall {
+            min-height: 220px;
+            height: auto;
+        }
+
+        .feature-image,
+        .feature-image-tall {
+            height: 240px;
+        }
+    }
+
+    /* Bloc final avec image centrée et bouton vers le catalogue */
+    .catalogue-callout {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        align-items: center;
+        gap: 28px;
+        max-width: 1000px;
+        margin: 40px auto 80px;
+        padding: 28px;
+        background: var(--header-green);
+        border: 1px solid var(--border-green);
+        border-radius: 14px;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .catalogue-callout img {
+        width: 100%;
+        height: 340px;
+        display: block;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: var(--shadow-strong);
+    }
+
+    .catalogue-callout-content {
+        color: var(--text-light);
+    }
+
+    .catalogue-callout-content h2 {
+        margin: 0 0 14px;
+        font-size: 2rem;
+        line-height: 1.15;
+    }
+
+    .catalogue-callout-content p:last-child {
+        margin: 0 0 24px;
+        color: var(--text-light);
+        line-height: 1.7;
+    }
+
+    @media (max-width: 700px) {
+        .catalogue-callout {
+            grid-template-columns: 1fr;
+            margin: 24px 16px 56px;
+            padding: 32px 18px;
+        }
+
+        .catalogue-callout img {
+            height: 240px;
+        }
+
+        .catalogue-callout-content h2 {
+            font-size: 1.55rem;
+        }
+    }
+
