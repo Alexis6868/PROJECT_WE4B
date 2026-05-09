@@ -1,95 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-<style>
-    /* Section Héro spéciale Mariage */
-    .hero-wedding {
-        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                    url('https://images.unsplash.com/photo-1511210352280-30f5699098d3?q=80&w=2070&auto=format&fit=crop');
-        background-size: cover;
-        background-position: center;
-        padding: 120px 20px;
-        text-align: center;
-        color: white;
-        border-radius: 15px;
-        margin-bottom: 40px;
-    }
-
-    .hero-wedding h1 {
-        font-size: 3.5rem;
-        text-transform: uppercase;
-        margin-bottom: 1.5rem;
-        line-height: 1.1;
-    }
-
-    .hero-wedding h1 span {
-        color: #e67e22; /* Ton orange de tout à l'heure */
-    }
-
-    .hero-wedding p {
-        font-size: 1.4rem;
-        max-width: 800px;
-        margin: 0 auto 2rem;
-        font-style: italic;
-    }
-
-    .btn-wedding {
-        background: #e67e22;
-        color: white;
-        padding: 18px 45px;
-        font-size: 1.3rem;
-        font-weight: 800;
-        border-radius: 50px;
-        display: inline-block;
-        transition: 0.3s;
-        box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);
-    }
-
-    .btn-wedding:hover {
-        background: #d35400;
-        transform: scale(1.05);
-        color: white;
-    }
-
-    .joke-section {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
-        margin-top: 60px;
-    }
-
-    .joke-card {
-        background: #fdf2e9;
-        padding: 30px;
-        border-radius: 10px;
-        border-left: 5px solid #e67e22;
-    }
-</style>
-
-<div class="hero-wedding">
-    <h1>Dites « OUI » avec <span>60 tonnes</span> de romantisme !</h1>
-    <p>« Parce qu'une limousine, c'est pour les petits joueurs qui ont peur de la belle-famille. »</p>
+<div class="main-aff">
+    <h1></h1>
+    <p>Location de véhicules blindés pour événements, tournages, reconstitutions et expériences privées.</p>
+    <p>« Depuis 1987, nous agrandissons notre collection pour la partager au plus grand nombre. »</p>
     
-    <a href="{{ path('app_catalogue') }}" class="btn-wedding">
-        TROUVER MON CHAR DE MARIAGE
+    <a href="{{ path('app_catalogue') }}" class="main-cta">
+        Voir le Catalogue !
     </a>
 </div>
 
-<div class="joke-section">
-    <div class="joke-card">
-        <h3>Entrée fracassante</h3>
-        <p>Garanti sans rayures sur la robe de mariée (mais on ne garantit pas l'état du parking de l'église).</p>
+<div class="feature-grid">
+    <div class="feature-card">
+        <h3>Immersion historique</h3>
+        <p>Installez vos visiteurs au premier rang d'une reconstitution marquante, de la Seconde Guerre mondiale aux véhicules contemporains. Nos blindés apportent une présence réaliste, impressionnante et parfaitement adaptée aux événements culturels ou pédagogiques.</p>
     </div>
-    <div class="joke-card">
-        <h3>Belle-famille gérée</h3>
-        <p>Un canon de 120mm est l'argument ultime pour calmer les débats sur le plan de table.</p>
+
+    <figure class="feature-image">
+        <img src="https://images.unsplash.com/photo-1631570323109-745d1f7d2b74?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="M4A2 sur un champ plat">
+    </figure>
+
+    <figure class="feature-image feature-image-tall">
+        <img src="https://images.unsplash.com/photo-1516822003754-cca485356ecb?q=80&w=900&auto=format&fit=crop" alt="Événement historique avec véhicules militaires">
+    </figure>
+
+    <div class="feature-card">
+        <h3>Une arrivée vraiment mémorable</h3>
+        <p>Parce qu'une limousine ne suffit pas toujours à marquer les esprits, TankRent vous propose une entrée spectaculaire pour vos mariages, tournages ou soirées privées. Un blindé transforme une simple arrivée en moment que personne n'oublie.</p>
     </div>
-    <div class="joke-card">
-        <h3>Photos uniques</h3>
-        <p>Oubliez les colombes, lancez des obus fumigènes rose paillette pour l'ouverture du bal !</p>
+
+    <div class="feature-card">
+        <h3>Des événements sur mesure</h3>
+        <p>Airsoft, paintball, festivals, démonstrations ou opérations de communication : nous adaptons chaque prestation à votre terrain, à votre public et à vos objectifs. Notre équipe vous accompagne pour construire une expérience forte, encadrée et cohérente.</p>
     </div>
+
+    <figure class="feature-image">
+        <img src="https://pbs.twimg.com/media/ErSgvVKXEAIvNJr?format=jpg&name=small" alt="T90-A durant le Tank Biathlon">
+    </figure>
 </div>
+
+<section class="catalogue-callout">
+    <img src="https://images.pexels.com/photos/9250/green-attraction-war-museum.jpg" alt="MBT Leopard 2A5 dans une exposition">
+
+    <a href="{{ path('app_catalogue') }}" class="main-cta">
+        Catalogue
+    </a>
+</section>
 
 {% endblock %}

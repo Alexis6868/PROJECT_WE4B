@@ -1,4 +1,71 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'technical-form'}}) }}
+    <div class="technical-form-grid">
+        <fieldset class="technical-section">
+            <legend>Identification</legend>
+
+            <div class="form-field">
+                {{ form_label(form.nom, 'Nom du véhicule', {'label_attr': {'title': 'Exemple : AMX-30, Leopard 2A5, M4 Sherman'}}) }}
+                {{ form_widget(form.nom) }}
+                {{ form_errors(form.nom) }}
+            </div>
+
+            <div class="form-field">
+                {{ form_label(form.type, 'Type / modèle', {'label_attr': {'title': 'Exemple : Char moyen, Char lourd, Char léger, Transport, Spétial'}}) }}
+                {{ form_widget(form.type) }}
+                {{ form_errors(form.type) }}
+            </div>
+        </fieldset>
+
+        <fieldset class="technical-section">
+            <legend>Visuel catalogue</legend>
+
+            <div class="form-field">
+                {{ form_label(form.image, 'URL de l’image', {'label_attr': {'title': 'Exemple : https://site.fr/images/leopard-2a5.jpg'}}) }}
+                {{ form_widget(form.image) }}
+                {{ form_errors(form.image) }}
+            </div>
+
+            <div class="form-field">
+                {{ form_label(form.description, 'Description courte', {'label_attr': {'title': 'Exemple : Blindé moderne adapté aux démonstrations, expositions et événements privés.'}}) }}
+                {{ form_widget(form.description) }}
+                {{ form_errors(form.description) }}
+            </div>
+        </fieldset>
+
+        <fieldset class="technical-section">
+            <legend>Données techniques</legend>
+
+            <div class="form-field">
+                {{ form_label(form.etat, 'État opérationnel', {'label_attr': {'title': 'Exemple : Opérationnel, En maintenance, En panne'}}) }}
+                {{ form_widget(form.etat) }}
+                {{ form_errors(form.etat) }}
+            </div>
+
+            <div class="form-field">
+                {{ form_label(form.masse, 'Masse en tonnes', {'label_attr': {'title': 'Exemple : 46 pour un véhicule de 46 tonnes'}}) }}
+                {{ form_widget(form.masse) }}
+                {{ form_errors(form.masse) }}
+            </div>
+
+            <div class="form-field">
+                {{ form_label(form.indice_maintenance, 'Indice de maintenance', {'label_attr': {'title': 'Exemple : 100 pour un véhicule en excellent état, 50 pour une maintenance à prévoir'}}) }}
+                {{ form_widget(form.indice_maintenance) }}
+                {{ form_errors(form.indice_maintenance) }}
+            </div>
+        </fieldset>
+
+        <fieldset class="technical-section">
+            <legend>Stockage</legend>
+
+            <div class="form-field">
+                {{ form_label(form.entrepot, 'Entrepôt affecté', {'label_attr': {'title': 'Sélectionnez l’entrepôt où le véhicule est stocké'}}) }}
+                {{ form_widget(form.entrepot) }}
+                {{ form_errors(form.entrepot) }}
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="technical-actions">
+        <button class="main-cta technical-submit">{{ button_label|default('Enregistrer') }}</button>
+    </div>
 {{ form_end(form) }}
