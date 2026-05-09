@@ -43,7 +43,11 @@
                 </div>
 
                 <div class="card-actions justify-end">
-                    <a href="{{ path('app_reservation_new', {'id_vehicule': vehicule.id}) }}" class="main-cta btn-louer">Louer</a>
+                    {% if vehicule.etat == 'Opérationnel' %}
+                        <a href="{{ path('app_reservation_new', {'id_vehicule': vehicule.id}) }}" class="main-cta btn-louer">Louer</a>
+                    {% else %}
+                        <span class="main-cta btn-louer btn-disabled" aria-disabled="true">Indisponible</span>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -65,22 +69,32 @@ document.addEventListener('DOMContentLoaded', function() {
             .replace(/[\u0300-\u036f]/g, '');
     }
 
+    function normalizeStatus(value) {
+        const status = normalizeValue(value);
+
+        if (status === 'neuf') {
+            return 'operationnel';
+        }
+
+        if (status === 'endommage') {
+            return 'en panne';
+        }
+
+        return status;
+    }
+
     function filterTanks() {
         const searchTerm = normalizeValue(searchInput.value);
-        const selectedStatus = normalizeValue(statusFilter.value);
+        const selectedStatus = normalizeStatus(statusFilter.value);
 
         cards.forEach(card => {
             const tankName = normalizeValue(card.getAttribute('data-search') || '');
-            const tankStatus = normalizeValue(card.getAttribute('data-etat') || '');
+            const tankStatus = normalizeStatus(card.getAttribute('data-etat') || '');
 
             const matchesSearch = tankName.includes(searchTerm);
             const matchesStatus = (selectedStatus === 'all' || tankStatus === selectedStatus);
 
-            if (matchesSearch && matchesStatus) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
+            card.classList.toggle('is-hidden', !(matchesSearch && matchesStatus));
         });
     }
 
