@@ -57,19 +57,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.tank-card');
 
     function filterTanks() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
+        // .normalize("NFD") permet de trouver "Leclerc" même si on tape "leclérc"
+        const searchTerm = searchInput.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
         const selectedStatus = statusFilter.value.toLowerCase();
 
         cards.forEach(card => {
-            const tankName = card.getAttribute('data-search').toLowerCase();
+            const tankData = card.getAttribute('data-search').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
             const tankStatus = card.getAttribute('data-etat').toLowerCase();
-            const tankNom = card.getAttribute('data-nom').toLowerCase();
 
-            const matchesSearch = tankName.includes(searchTerm);
+            const matchesSearch = tankData.includes(searchTerm);
             const matchesStatus = (selectedStatus === 'all' || tankStatus === selectedStatus);
 
+            
             if (matchesSearch && matchesStatus) {
-                card.style.display = 'block';
+                card.style.display = '';
             } else {
                 card.style.display = 'none';
             }
@@ -78,6 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     searchInput.addEventListener('input', filterTanks);
     statusFilter.addEventListener('change', filterTanks);
+
+    window.addEventListener('pageshow', filterTanks);
 });
 </script>
 {% endblock %}
