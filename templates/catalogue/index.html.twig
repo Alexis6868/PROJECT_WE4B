@@ -1,71 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CatalogueController!{% endblock %}
+{% block title %}Catalogue{% endblock %}
 
 
 {% block body %}
-<style>
-    .tank-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        padding: 20px;
-        justify-content: center;
-    }
-    .tank-card {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        width: 300px;
-        overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: transform 0.2s;
-    }
-    .tank-card:hover { transform: scale(1.02); }
-    .tank-img { width: 100%; height: 200px; background: #eee; object-fit: cover; }
-    .tank-info { padding: 15px; }
-    .btn-louer {
-        display: block;
-        text-align: center;
-        background: #2c3e50;
-        color: white;
-        padding: 10px;
-        text-decoration: none;
-        border-radius: 4px;
-        margin-top: 10px;
-    }
-</style>
+<section class="catalogue-page">
+    <div class="catalogue-header">
+        <h1>Notre flotte de véhicules blindés</h1>
+        <p>Comparez les modèles disponibles, vérifiez leur état et choisissez le blindé le plus adapté à votre événement.</p>
+    </div>
 
-<h1>Notre Flotte de Tanks</h1>
+    <div class="catalogue-filters">
+        <input type="text" id="searchInput" placeholder="Rechercher un modèle ou un type...">
 
-{# templates/catalogue/index.html.twig #}
+        <select id="statusFilter">
+            <option value="all">Tous les états</option>
+            <option value="Opérationnel">Opérationnel</option>
+            <option value="En maintenance">En maintenance</option>
+            <option value="En panne">En panne</option>
+        </select>
+    </div>
 
-<div class="filters" style="margin: 20px; display: flex; gap: 15px; justify-content: center;">
-    <input type="text" id="searchInput" placeholder="Rechercher un modèle..." 
-           style="padding: 8px; border-radius: 4px; border: 1px solid #ccc; width: 250px;">
-    
-    <select id="statusFilter" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-        <option value="all">Tous les états</option>
-        <option value="Opérationnel">Opérationnel</option>
-        <option value="En maintenance">En maintenance</option>
-        <option value="En panne">En panne</option>
-    </select>
-</div>
-
-<div class="tank-grid" id="tankGrid">
+    <div class="tank-grid" id="tankGrid">
     {% for vehicule in vehicules %}
-        {# On ajoute des "data-attributes" pour que le JS puisse lire les infos facilement #}
-        <div class="tank-card" data-nom="{{ vehicule.nom|lower }}" data-type="{{ vehicule.type|lower }}" data-etat="{{ vehicule.etat }}">
-            <div class="tank-info">
-                <h2>{{ vehicule.nom }}</h2>
-                <h3>{{ vehicule.type }}</h3>
-                <img src="{{vehicule.image}}" alt="">
-                <p>État : <span class="etat-label">{{ vehicule.etat }}</span></p>
-                <p>Masse : {{ vehicule.masse }} tonnes</p>
-                <a href="{{ path('app_reservation_new', {'id_vehicule': vehicule.id}) }}" class="btn-louer">Louer</a>
+        <div class="card bg-base-100 w-96 shadow-sm tank-card" data-search="{{ vehicule.nom|lower }} {{ vehicule.type|lower }}" data-etat="{{ vehicule.etat }}">
+            <figure>
+                <img src="{{ vehicule.image }}" alt="{{ vehicule.nom }}">
+            </figure>
+
+            <div class="card-body">
+                <div class="card-heading">
+                    <h2 class="card-title">{{ vehicule.nom }}</h2>
+                    <span class="tank-type">{{ vehicule.type }}</span>
+                </div>
+
+                <p>{{ vehicule.description }}</p>
+
+                <div class="tank-meta">
+                    <span>État : <strong>{{ vehicule.etat }}</strong></span>
+                    <span>Masse : <strong>{{ vehicule.masse }} tonnes</strong></span>
+                </div>
+
+                <div class="card-actions justify-end">
+                    <a href="{{ path('app_reservation_new', {'id_vehicule': vehicule.id}) }}" class="main-cta btn-louer">Louer</a>
+                </div>
             </div>
         </div>
     {% endfor %}
-</div>
+    </div>
+</section>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
@@ -73,13 +57,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.tank-card');
 
     function filterTanks() {
-        
         const searchTerm = searchInput.value.toLowerCase().trim();
         const selectedStatus = statusFilter.value.toLowerCase();
 
         cards.forEach(card => {
-            // On récupère les data et on les passe en minuscules d'office
-            const tankName = card.getAttribute('data-type').toLowerCase();
+            const tankName = card.getAttribute('data-search').toLowerCase();
             const tankStatus = card.getAttribute('data-etat').toLowerCase();
             const tankNom = card.getAttribute('data-nom').toLowerCase();
 
@@ -99,4 +81,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 {% endblock %}
-

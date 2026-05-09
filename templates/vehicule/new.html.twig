@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Vehicule{% endblock %}
+{% block title %}Ajouter un blindé{% endblock %}
 
 {% block body %}
-    <h1>Create new Vehicule</h1>
+<section class="admin-form-page">
+    <div class="admin-form-header">
+        <p class="login-kicker">Administration flotte</p>
+        <h1>Ajouter un véhicule blindé</h1>
+        <p>Renseignez les informations techniques du véhicule avant de l’ajouter au catalogue de location.</p>
+    </div>
 
-    {{ include('vehicule/_form.html.twig') }}
+    {{ include('vehicule/_form.html.twig', {'button_label': 'Ajouter au catalogue'}) }}
 
-    <a href="{{ path('app_vehicule_index') }}">back to list</a>
+    <a href="{{ path('app_vehicule_index') }}" class="admin-back-link">Retour à la liste des véhicules</a>
+</section>
 {% endblock %}
