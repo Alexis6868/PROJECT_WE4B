@@ -1,0 +1,48 @@
+/*-----Pour pages entrepôt--------------------------------*/
+    .warehouse-form-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .warehouse-help p {
+        margin: 0 0 14px;
+        color: var(--text-body);
+        line-height: 1.7;
+    }
+
+    .warehouse-help p:last-child {
+        margin-bottom: 0;
+    }
+
+    .warehouse-detail-card {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .warehouse-detail-item {
+        padding: 20px;
+        background: var(--paper-section);
+        border: 1px solid var(--border-dark-green);
+        border-radius: 10px;
+    }
+
+    .warehouse-detail-item span {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--black-forest);
+        font-size: 0.8rem;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+
+    .warehouse-detail-item strong {
+        color: var(--text-body);
+        font-size: 1.1rem;
+    }
+
+    @media (max-width: 760px) {
+        .warehouse-form-grid,
+        .warehouse-detail-card {
+            grid-template-columns: 1fr;
+        }
+    }
