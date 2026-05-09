@@ -18,6 +18,7 @@
             <option value="Opérationnel">Opérationnel</option>
             <option value="En maintenance">En maintenance</option>
             <option value="En panne">En panne</option>
+            <option value="Réservé">Réservé</option>
         </select>
     </div>
 
@@ -56,14 +57,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const statusFilter = document.getElementById('statusFilter');
     const cards = document.querySelectorAll('.tank-card');
 
+    function normalizeValue(value) {
+        return value
+            .toLowerCase()
+            .trim()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+    }
+
     function filterTanks() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        const selectedStatus = statusFilter.value.toLowerCase();
+        const searchTerm = normalizeValue(searchInput.value);
+        const selectedStatus = normalizeValue(statusFilter.value);
 
         cards.forEach(card => {
-            const tankName = card.getAttribute('data-search').toLowerCase();
-            const tankStatus = card.getAttribute('data-etat').toLowerCase();
-            const tankNom = card.getAttribute('data-nom').toLowerCase();
+            const tankName = normalizeValue(card.getAttribute('data-search') || '');
+            const tankStatus = normalizeValue(card.getAttribute('data-etat') || '');
 
             const matchesSearch = tankName.includes(searchTerm);
             const matchesStatus = (selectedStatus === 'all' || tankStatus === selectedStatus);

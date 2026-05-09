@@ -3,7 +3,7 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-<section class="login-page register-page">
+<section class="login-page register-page textured-page-bg">
     <div class="login-panel register-panel">
         <div class="login-intro">
             <p class="login-kicker">Créer un compte</p>
@@ -17,35 +17,39 @@
             {{ form_start(registrationForm) }}
                 <div class="register-fields">
                     <div class="form-field">
-                        {{ form_label(registrationForm.nom, 'Nom') }}
+                        {{ form_label(registrationForm.nom, 'Nom *') }}
                         {{ form_widget(registrationForm.nom) }}
                         {{ form_errors(registrationForm.nom) }}
                     </div>
 
                     <div class="form-field">
-                        {{ form_label(registrationForm.prenom, 'Prénom') }}
+                        {{ form_label(registrationForm.prenom, 'Prénom *') }}
                         {{ form_widget(registrationForm.prenom) }}
                         {{ form_errors(registrationForm.prenom) }}
                     </div>
 
                     <div class="form-field">
-                        {{ form_label(registrationForm.email, 'Adresse email') }}
+                        {{ form_label(registrationForm.email, 'Adresse email *') }}
                         {{ form_widget(registrationForm.email) }}
                         {{ form_errors(registrationForm.email) }}
                     </div>
 
                     <div class="form-field">
-                        {{ form_label(registrationForm.tel, 'Téléphone') }}
+                        {{ form_label(registrationForm.tel, 'Téléphone *') }}
                         {{ form_widget(registrationForm.tel) }}
                         {{ form_errors(registrationForm.tel) }}
                     </div>
 
                     <div class="form-field register-password">
-                        {{ form_label(registrationForm.plainPassword, 'Mot de passe') }}
+                        {{ form_label(registrationForm.plainPassword, 'Mot de passe *') }}
                         {{ form_widget(registrationForm.plainPassword) }}
                         {{ form_errors(registrationForm.plainPassword) }}
                     </div>
+
+                    
                 </div>
+
+                <div> <p> * champ obligatoire </p> </div>
 
                 <div class="remember-choice register-terms">
                     {{ form_widget(registrationForm.agreeTerms) }}

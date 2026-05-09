@@ -20,6 +20,8 @@
         {% block javascripts %}{% block importmap %}{{ importmap('app') }}{% endblock %}{% endblock %}
     </head>
     <body>
+        {% set current_route = app.request.attributes.get('_route') %}
+
         <header>
             <nav class="navbar">
                 <div class="logo">
@@ -28,19 +30,19 @@
                     </a>
                 </div>
                 <ul class="nav-links">
-                    <li><a href="{{ path('app_main') }}">Accueil</a></li>
-                    <li><a href="{{ path('app_catalogue') }}">Catalogue</a></li>
+                    <li><a href="{{ path('app_main') }}" class="{{ current_route == 'app_main' ? 'active' : '' }}">Accueil</a></li>
+                    <li><a href="{{ path('app_catalogue') }}" class="{{ current_route == 'app_catalogue' ? 'active' : '' }}">Catalogue</a></li>
                     {% if app.user %}
-                        <li><a href="{{ path('app_reservation_index') }}">Mes Réservations</a></li>
+                        <li><a href="{{ path('app_reservation_index') }}" class="{{ current_route starts with 'app_reservation' ? 'active' : '' }}">Mes Réservations</a></li>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li><a href="{{ path('app_vehicule_index') }}" class="btn-admin">Vehicules</a></li>
-                            <li><a href="{{ path('app_reservation_index') }}" class="btn-admin">Réservations</a></li>
-                            <li><a href="{{ path('app_entrepot_index') }}" class="btn-admin">Entrepôts</a></li>                            
+                            <li><a href="{{ path('app_vehicule_index') }}" class="btn-admin {{ current_route starts with 'app_vehicule' ? 'active' : '' }}">Vehicules</a></li>
+                            <li><a href="{{ path('app_reservation_index') }}" class="btn-admin {{ current_route starts with 'app_reservation' ? 'active' : '' }}">Réservations</a></li>
+                            <li><a href="{{ path('app_entrepot_index') }}" class="btn-admin {{ current_route starts with 'app_entrepot' ? 'active' : '' }}">Entrepôts</a></li>                            
                         {% endif %}
                         <li><a href="{{ path('app_logout') }}" style="color: #95a5a6;">Déconnexion</a></li>
                     {% else %}
-                        <li><a href="{{ path('app_login') }}">Connexion</a></li>
-                        <li><a href="{{ path('app_register') }}" style="color: #01f70d;">S'inscrire</a></li>
+                        <li><a href="{{ path('app_login') }}" class="{{ current_route == 'app_login' ? 'active' : '' }}">Connexion</a></li>
+                        <li><a href="{{ path('app_register') }}" class="{{ current_route == 'app_register' ? 'active' : '' }}" style="color: #01f70d;">S'inscrire</a></li>
                     {% endif %}
                 </ul>
             </nav>
