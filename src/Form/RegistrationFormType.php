@@ -8,11 +8,13 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Email;
 
 class RegistrationFormType extends AbstractType
 {
@@ -20,10 +22,53 @@ class RegistrationFormType extends AbstractType
     {
         $builder
 
-            ->add('nom')
-            ->add('prenom')
-            ->add('email',EmailType::class, )
-            ->add('tel')
+            ->add('nom', TextType::class, [
+                'constraints' => [
+                    new NotBlank(
+                        message: 'Veuillez entrer votre nom',
+                    ),
+                    new Length(
+                        min: 2,
+                        minMessage: 'Votre nom doit contenir au moins {{ limit }} caractères',
+                        max: 50,
+                        maxMessage: 'Votre nom ne peut pas contenir plus de {{ limit }} caractères',
+                    ),
+                ],
+            ])
+            ->add('prenom', TextType::class, [
+                'constraints' => [
+                    new NotBlank(
+                        message: 'Veuillez entrer votre prénom',
+                    ),
+                    new Length(
+                        min: 2,
+                        minMessage: 'Votre prénom doit contenir au moins {{ limit }} caractères',
+                        max: 50,
+                        maxMessage: 'Votre prénom ne peut pas contenir plus de {{ limit }} caractères',
+                    ),
+                ],
+            ])
+            ->add('email',EmailType::class,[
+                'constraints' => [
+                    new NotBlank(
+                        message: 'Veuillez entrer votre adresse email',
+                    ),
+                   new Email([
+                        'message' => 'L\'adresse email "{{ value }}" n\'est pas valide.'
+                    ]),
+                ],
+            ] )
+            ->add('tel', NumberType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Length(
+                        min: 10,
+                        max: 15,
+                        minMessage: 'Votre numéro de téléphone doit contenir au moins {{ limit }} chiffres',
+                        maxMessage: 'Votre numéro de téléphone ne peut pas contenir plus de {{ limit }} chiffres',
+                    ),
+                ],
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
