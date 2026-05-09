@@ -54,7 +54,7 @@
 <div class="tank-grid" id="tankGrid">
     {% for vehicule in vehicules %}
         {# On ajoute des "data-attributes" pour que le JS puisse lire les infos facilement #}
-        <div class="tank-card" data-type="{{ vehicule.type|lower }}" data-etat="{{ vehicule.etat }}">
+        <div class="tank-card" data-nom="{{ vehicule.nom|lower }}" data-type="{{ vehicule.type|lower }}" data-etat="{{ vehicule.etat }}">
             <div class="tank-info">
                 <h2>{{ vehicule.nom }}</h2>
                 <h3>{{ vehicule.type }}</h3>
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.tank-card');
 
     function filterTanks() {
-        // .trim() enlève les espaces inutiles au début et à la fin
+        
         const searchTerm = searchInput.value.toLowerCase().trim();
         const selectedStatus = statusFilter.value.toLowerCase();
 
@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // On récupère les data et on les passe en minuscules d'office
             const tankName = card.getAttribute('data-type').toLowerCase();
             const tankStatus = card.getAttribute('data-etat').toLowerCase();
+            const tankNom = card.getAttribute('data-nom').toLowerCase();
 
             const matchesSearch = tankName.includes(searchTerm);
             const matchesStatus = (selectedStatus === 'all' || tankStatus === selectedStatus);
