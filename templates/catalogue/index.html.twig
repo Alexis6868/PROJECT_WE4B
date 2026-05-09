@@ -84,22 +84,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function filterTanks() {
-        const searchTerm = normalizeValue(searchInput.value);
-        const selectedStatus = normalizeStatus(statusFilter.value);
+        // .normalize("NFD") permet de trouver "Leclerc" même si on tape "leclérc"
+        const searchTerm = searchInput.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+        const selectedStatus = statusFilter.value.toLowerCase();
 
         cards.forEach(card => {
-            const tankName = normalizeValue(card.getAttribute('data-search') || '');
-            const tankStatus = normalizeStatus(card.getAttribute('data-etat') || '');
+            const tankData = card.getAttribute('data-search').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const tankStatus = card.getAttribute('data-etat').toLowerCase();
 
-            const matchesSearch = tankName.includes(searchTerm);
+            const matchesSearch = tankData.includes(searchTerm);
             const matchesStatus = (selectedStatus === 'all' || tankStatus === selectedStatus);
 
-            card.classList.toggle('is-hidden', !(matchesSearch && matchesStatus));
+            
+            if (matchesSearch && matchesStatus) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
         });
     }
 
     searchInput.addEventListener('input', filterTanks);
     statusFilter.addEventListener('change', filterTanks);
+
+    window.addEventListener('pageshow', filterTanks);
 });
 </script>
 {% endblock %}
