@@ -10,6 +10,8 @@ docker compose up -d
 Démarrer le site web :
 docker compose exec php symfony serve -d --allow-all-ip --no-tls --port=8000
 
+(Installer composer)
+
 L'accès en local a PHPmyadmin se fait par l'addresse :
 localhost:9000
 
