@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Entrepot{% endblock %}
+{% block title %}Nouvel entrepôt{% endblock %}
 
 {% block body %}
-    <h1>Create new Entrepot</h1>
+<section class="admin-form-page warehouse-page">
+    <div class="admin-form-header">
+        <p class="login-kicker">Administration stockage</p>
+        <h1>Ajouter un entrepôt</h1>
+        <p>Créez un nouvel emplacement de stockage pour organiser la flotte et préparer les affectations de véhicules.</p>
+    </div>
 
-    {{ include('entrepot/_form.html.twig') }}
+    {{ include('entrepot/_form.html.twig', {'button_label': 'Ajouter l’entrepôt'}) }}
 
-    <a href="{{ path('app_entrepot_index') }}">back to list</a>
+    <a href="{{ path('app_entrepot_index') }}" class="admin-back-link">Retour aux entrepôts</a>
+</section>
 {% endblock %}

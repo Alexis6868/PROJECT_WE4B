@@ -1,41 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reservation index{% endblock %}
+{% block title %}Réservations{% endblock %}
 
 {% block body %}
-    <h1>Reservation index</h1>
+<section class="admin-form-page reservation-page">
+    <div class="admin-form-header">
+        <p class="login-kicker">Réservations</p>
+        <h1>Suivi des locations</h1>
+        <p>Consultez les réservations en cours, les périodes demandées et les véhicules associés.</p>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>Nom</th>
-                <th>Date_debut</th>
-                <th>Date_fin</th>
-                <th>Prix</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reservation in reservations %}
-            <tr>
-                <td>{{ reservation.id }}</td>
-                <td>{{ reservation.idVehicule.nom }}</td>
-                <td>{{reservation.dateDebut ? reservation.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ reservation.dateFin ? reservation.dateFin|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ reservation.prix }}</td>
-                <td>
-                    <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="admin-toolbar">
+        <a href="{{ path('app_catalogue') }}" class="main-cta">Nouvelle réservation</a>
+    </div>
 
-    <a href="{{ path('app_catalogue') }}">Create new</a>
+    <div class="admin-table-card">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Véhicule</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Prix</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>#{{ reservation.id }}</td>
+                    <td>
+                        <strong>{{ reservation.idVehicule.nom }}</strong>
+                    </td>
+                    <td>{{ reservation.dateDebut ? reservation.dateDebut|date('d/m/Y H:i') : '' }}</td>
+                    <td>{{ reservation.dateFin ? reservation.dateFin|date('d/m/Y H:i') : '' }}</td>
+                    <td><strong>{{ reservation.prix }} €</strong></td>
+                    <td>
+                        <div class="admin-actions">
+                            <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">Voir</a>
+                            <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">Modifier</a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="admin-empty">Aucune réservation enregistrée.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
 {% endblock %}

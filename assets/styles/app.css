@@ -1,15 +1,41 @@
 :root {
-    /* Couleurs globales du site */
+    /* Palette principale */
     --black: #020202;
     --evergreen: #0d2818;
     --black-forest: #04471c;
     --sea-green: #058c42;
     --malachite: #16db65;
-    --paper: #f1eadb;
-    --paper-soft: #fbf7ec;
+
+    /* Fonds sombres */
+    --deep-green: #03170d;
+    --page-green: #0b2415;
+    --header-green: #06140c;
+    --hero-green: #063d1a;
+    --hero-green-dark: #08170e;
+
+    /* Fonds clairs */
+    --paper-soft: #fbf7ec; /* Grandes surfaces : cartes, formulaires, tableaux */
+    --paper-section: #fffdf5; /* Petits blocs : champs, encadrés, détails */
+
+    /* Textes */
     --text-dark: #122018;
+    --text-body: #253329;
+    --text-light: #edf7ef; /* Texte clair unique sur fonds sombres */
+    --cta-text: var(--deep-green);
+
+    /* États */
+    --danger: #7a1f12;
+    --danger-text: #8d2415;
+    --malachite-hover: #3cf486;
+
+    /* Bordures, halos et ombres */
     --border-green: rgba(22, 219, 101, 0.28);
+    --border-dark-green: rgba(4, 71, 28, 0.18);
+    --line-light: rgba(255, 255, 255, 0.05);
+    --focus-ring: 0 0 0 4px rgba(22, 219, 101, 0.16);
     --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.22);
+    --shadow-strong: 0 24px 55px rgba(0, 0, 0, 0.28);
+    --shadow-cta: 0 10px 24px rgba(22, 219, 101, 0.24);
 }
 
 body {
@@ -18,25 +44,25 @@ body {
     background:
         linear-gradient(
             90deg,
-            #03170d 0,
-            #03170d 72px,
-            #0b2415 72px,
-            #0b2415 calc(100% - 72px),
-            #03170d calc(100% - 72px),
-            #03170d 100%
+            var(--deep-green) 0,
+            var(--deep-green) 72px,
+            var(--page-green) 72px,
+            var(--page-green) calc(100% - 72px),
+            var(--deep-green) calc(100% - 72px),
+            var(--deep-green) 100%
         );
     color: var(--text-dark);
 }
 
 header,
 footer {
-    background: #06140c;
-    border-color: rgba(22, 219, 101, 0.18);
+    background: var(--header-green);
+    border-color: var(--border-green);
 }
 
 header {
-    border-bottom: 1px solid rgba(22, 219, 101, 0.22);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--border-green);
+    box-shadow: var(--shadow-soft);
 }
 
 .navbar {
@@ -45,7 +71,7 @@ header {
 }
 
 .nav-links a {
-    color: #edf7ef;
+    color: var(--text-light);
     font-weight: 700;
     text-decoration: none;
 }
@@ -62,7 +88,7 @@ header {
 }
 
 footer {
-    border-top: 1px solid rgba(22, 219, 101, 0.18);
+    border-top: 1px solid var(--border-green);
 }
 
 footer h4 {
@@ -70,12 +96,12 @@ footer h4 {
 }
 
 footer p {
-    color: #d9e7dc;
+    color: var(--text-light);
 }
 
 @media (max-width: 700px) {
     body {
-        background: #0b2415;
+        background: var(--page-green);
     }
 
     .main-content {
@@ -90,26 +116,43 @@ footer p {
 }
 
 /*-----Pour Page d'accueil--------------------------------*/
+    /* Fond texturé de la page d'accueil */
+    .home-page {
+        margin: -20px;
+        padding: 20px 20px 80px;
+        background:
+            linear-gradient(135deg, var(--border-green) 0 12%, transparent 12% 100%),
+            repeating-linear-gradient(
+                135deg,
+                var(--line-light) 0 2px,
+                transparent 2px 20px
+            ),
+            radial-gradient(circle at 88% 10%, var(--border-green), transparent 24%),
+            radial-gradient(circle at 12% 72%, var(--border-green), transparent 28%),
+            linear-gradient(135deg, var(--hero-green), var(--hero-green-dark) 72%);
+        border-radius: 0 0 18px 18px;
+    }
+
     /* Section principale de la page d'accueil */
     .main-aff {
         position: relative;
         overflow: hidden;
         background:
-            linear-gradient(135deg, rgba(22, 219, 101, 0.22) 0 16%, transparent 16% 100%),
+            linear-gradient(135deg, var(--border-green) 0 16%, transparent 16% 100%),
             repeating-linear-gradient(
                 135deg,
-                rgba(241, 234, 219, 0.08) 0 2px,
+                var(--line-light) 0 2px,
                 transparent 2px 20px
             ),
-            radial-gradient(circle at 85% 18%, rgba(22, 219, 101, 0.18), transparent 26%),
-            linear-gradient(135deg, #063d1a, #08170e 72%);
+            radial-gradient(circle at 85% 18%, var(--border-green), transparent 26%),
+            linear-gradient(135deg, var(--hero-green), var(--hero-green-dark) 72%);
         padding: 110px 28px;
         text-align: center;
-        color: white;
+        color: var(--text-light);
         border: 1px solid var(--border-green);
         border-radius: 14px;
         margin: 18px auto 40px;
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), var(--shadow-soft);
+        box-shadow: inset 0 0 0 1px var(--line-light), var(--shadow-strong);
     }
 
     .main-aff h1 {
@@ -117,7 +160,7 @@ footer p {
         text-transform: uppercase;
         margin: 0 0 1rem;
         line-height: 1.1;
-        color: var(--paper-soft);
+        color: var(--text-light);
     }
 
     .main-aff p {
@@ -125,12 +168,12 @@ footer p {
         max-width: 800px;
         margin: 0 auto 2rem;
         font-style: italic;
-        color: #dfecdf;
+        color: var(--text-light);
     }
 
     .main-cta {
         background: linear-gradient(135deg, var(--malachite), var(--sea-green));
-        color: #03170d;
+        color: var(--deep-green);
         padding: 16px 42px;
         font-size: 1.05rem;
         font-weight: 800;
@@ -139,13 +182,13 @@ footer p {
         text-decoration: none;
         text-transform: uppercase;
         transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-        box-shadow: 0 10px 24px rgba(22, 219, 101, 0.24);
+        box-shadow: var(--shadow-cta);
     }
 
     .main-cta:hover {
-        background: linear-gradient(135deg, #3cf486, var(--malachite));
+        background: linear-gradient(135deg, var(--malachite-hover), var(--malachite));
         transform: translateY(-3px);
-        color: #03170d;
+        color: var(--deep-green);
     }
 
 
@@ -195,7 +238,7 @@ footer p {
         margin-bottom: 0;
         font-size: 0.95rem;
         line-height: 1.7;
-        color: #253329;
+        color: var(--text-body);
     }
 
     /* Blocs image de la grille accueil */
@@ -222,6 +265,12 @@ footer p {
 
     /* Version mobile : une seule colonne et plus de décalage */
     @media (max-width: 700px) {
+        .home-page {
+            margin: -14px;
+            padding: 14px 14px 56px;
+            border-radius: 0;
+        }
+
         .main-aff {
             padding: 72px 18px;
             margin-top: 8px;
@@ -272,9 +321,7 @@ footer p {
         max-width: 1000px;
         margin: 40px auto 80px;
         padding: 56px 24px;
-        background:
-            linear-gradient(135deg, rgba(22, 219, 101, 0.16), transparent 42%),
-            linear-gradient(135deg, #06140c, var(--black-forest));
+        background: var(--header-green);
         border: 1px solid var(--border-green);
         border-radius: 14px;
         box-shadow: var(--shadow-soft);
@@ -286,7 +333,7 @@ footer p {
         display: block;
         object-fit: cover;
         border-radius: 10px;
-        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.32);
+        box-shadow: var(--shadow-strong);
     }
 
     @media (max-width: 700px) {
@@ -325,14 +372,14 @@ footer p {
         flex-direction: column;
         justify-content: center;
         padding: 48px;
-        color: var(--paper-soft);
+        color: var(--text-light);
         background:
             repeating-linear-gradient(
                 135deg,
-                rgba(241, 234, 219, 0.08) 0 2px,
+                var(--line-light) 0 2px,
                 transparent 2px 20px
             ),
-            linear-gradient(135deg, #06140c, var(--black-forest));
+            linear-gradient(135deg, var(--header-green), var(--black-forest));
     }
 
     .login-kicker {
@@ -352,7 +399,7 @@ footer p {
 
     .login-intro p:last-child {
         margin: 0;
-        color: #d9e7dc;
+        color: var(--text-light);
         line-height: 1.7;
     }
 
@@ -364,14 +411,14 @@ footer p {
     .login-alert {
         margin-bottom: 22px;
         padding: 14px 16px;
-        color: #f8e6e1;
-        background: #7a1f12;
+        color: var(--text-light);
+        background: var(--danger);
         border-radius: 8px;
         font-weight: 700;
     }
 
     .login-alert a {
-        color: white;
+        color: var(--text-light);
         font-weight: 800;
     }
 
@@ -391,8 +438,8 @@ footer p {
         box-sizing: border-box;
         padding: 15px 16px;
         color: var(--text-dark);
-        background: white;
-        border: 1px solid rgba(4, 71, 28, 0.22);
+        background: var(--paper-section);
+        border: 1px solid var(--border-dark-green);
         border-radius: 8px;
         font-size: 1rem;
     }
@@ -400,7 +447,7 @@ footer p {
     .form-field input:focus {
         outline: none;
         border-color: var(--malachite);
-        box-shadow: 0 0 0 4px rgba(22, 219, 101, 0.16);
+        box-shadow: var(--focus-ring);
     }
 
     .remember-choice {
@@ -408,7 +455,7 @@ footer p {
         align-items: center;
         gap: 10px;
         margin: 4px 0 28px;
-        color: #253329;
+        color: var(--text-body);
         font-weight: 700;
     }
 
@@ -465,7 +512,7 @@ footer p {
     .register-form ul {
         margin: 8px 0 0;
         padding-left: 18px;
-        color: #8d2415;
+        color: var(--danger-text);
         font-weight: 700;
     }
 
@@ -476,7 +523,7 @@ footer p {
 
     .register-terms label {
         margin: 0;
-        color: #253329;
+        color: var(--text-body);
     }
 
     @media (max-width: 760px) {
@@ -500,14 +547,14 @@ footer p {
         margin: 0 auto 32px;
         padding: 54px 28px;
         text-align: center;
-        color: var(--paper-soft);
+        color: var(--text-light);
         background:
             repeating-linear-gradient(
                 135deg,
-                rgba(241, 234, 219, 0.08) 0 2px,
+                var(--line-light) 0 2px,
                 transparent 2px 20px
             ),
-            linear-gradient(135deg, #06140c, var(--black-forest));
+            linear-gradient(135deg, var(--header-green), var(--black-forest));
         border: 1px solid var(--border-green);
         border-radius: 14px;
         box-shadow: var(--shadow-soft);
@@ -522,7 +569,7 @@ footer p {
     .catalogue-header p {
         max-width: 680px;
         margin: 0 auto;
-        color: #d9e7dc;
+        color: var(--text-light);
         font-size: 1.05rem;
         line-height: 1.7;
     }
@@ -541,10 +588,10 @@ footer p {
         padding: 14px 16px;
         color: var(--text-dark);
         background: var(--paper-soft);
-        border: 1px solid rgba(4, 71, 28, 0.24);
+        border: 1px solid var(--border-dark-green);
         border-radius: 8px;
         font-size: 1rem;
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+        box-shadow: var(--shadow-soft);
     }
 
     .catalogue-filters input {
@@ -559,7 +606,7 @@ footer p {
     .catalogue-filters select:focus {
         outline: none;
         border-color: var(--malachite);
-        box-shadow: 0 0 0 4px rgba(22, 219, 101, 0.16);
+        box-shadow: var(--focus-ring);
     }
 
     .tank-grid {
@@ -573,7 +620,7 @@ footer p {
     .card {
         overflow: hidden;
         background: var(--paper-soft);
-        border: 1px solid rgba(4, 71, 28, 0.18);
+        border: 1px solid var(--border-dark-green);
         border-radius: 12px;
         transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
@@ -592,13 +639,13 @@ footer p {
 
     .tank-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 24px 55px rgba(0, 0, 0, 0.28);
+        box-shadow: var(--shadow-strong);
     }
 
     .card figure {
         margin: 0;
         height: 230px;
-        background: #dce4d7;
+        background: var(--paper-section);
     }
 
     .card figure img {
@@ -632,8 +679,8 @@ footer p {
     .tank-type {
         flex-shrink: 0;
         padding: 6px 10px;
-        color: #03170d;
-        background: rgba(22, 219, 101, 0.26);
+        color: var(--deep-green);
+        background: var(--border-green);
         border-radius: 999px;
         font-size: 0.78rem;
         font-weight: 800;
@@ -642,7 +689,7 @@ footer p {
 
     .card-body p {
         margin: 0;
-        color: #253329;
+        color: var(--text-body);
         line-height: 1.65;
     }
 
@@ -650,8 +697,8 @@ footer p {
         display: grid;
         gap: 8px;
         padding: 14px;
-        color: #253329;
-        background: #edf3e7;
+        color: var(--text-body);
+        background: var(--paper-soft);
         border-radius: 8px;
     }
 
@@ -713,14 +760,14 @@ footer p {
     .admin-form-header {
         margin-bottom: 28px;
         padding: 38px 32px;
-        color: var(--paper-soft);
+        color: var(--text-light);
         background:
             repeating-linear-gradient(
                 135deg,
-                rgba(241, 234, 219, 0.08) 0 2px,
+                var(--line-light) 0 2px,
                 transparent 2px 20px
             ),
-            linear-gradient(135deg, #06140c, var(--black-forest));
+            linear-gradient(135deg, var(--header-green), var(--black-forest));
         border: 1px solid var(--border-green);
         border-radius: 14px;
         box-shadow: var(--shadow-soft);
@@ -735,14 +782,14 @@ footer p {
     .admin-form-header p:last-child {
         max-width: 760px;
         margin: 0;
-        color: #d9e7dc;
+        color: var(--text-light);
         line-height: 1.7;
     }
 
     .technical-form {
         padding: 28px;
         background: var(--paper-soft);
-        border: 1px solid rgba(4, 71, 28, 0.18);
+        border: 1px solid var(--border-dark-green);
         border-radius: 14px;
         box-shadow: var(--shadow-soft);
     }
@@ -756,8 +803,8 @@ footer p {
     .technical-section {
         margin: 0;
         padding: 22px;
-        background: #fffdf5;
-        border: 1px solid rgba(4, 71, 28, 0.18);
+        background: var(--paper-section);
+        border: 1px solid var(--border-dark-green);
         border-radius: 10px;
     }
 
@@ -775,7 +822,7 @@ footer p {
 
     .technical-form label[title] {
         cursor: help;
-        text-decoration: underline dotted rgba(4, 71, 28, 0.45);
+        text-decoration: underline dotted var(--border-dark-green);
         text-underline-offset: 4px;
     }
 
@@ -785,8 +832,8 @@ footer p {
         box-sizing: border-box;
         padding: 15px 16px;
         color: var(--text-dark);
-        background: white;
-        border: 1px solid rgba(4, 71, 28, 0.22);
+        background: var(--paper-section);
+        border: 1px solid var(--border-dark-green);
         border-radius: 8px;
         font-size: 1rem;
     }
@@ -800,13 +847,13 @@ footer p {
     .technical-form textarea:focus {
         outline: none;
         border-color: var(--malachite);
-        box-shadow: 0 0 0 4px rgba(22, 219, 101, 0.16);
+        box-shadow: var(--focus-ring);
     }
 
     .technical-form ul {
         margin: 8px 0 0;
         padding-left: 18px;
-        color: #8d2415;
+        color: var(--danger-text);
         font-weight: 700;
     }
 
@@ -824,7 +871,7 @@ footer p {
     .admin-back-link {
         display: inline-block;
         margin-top: 22px;
-        color: var(--paper-soft);
+        color: var(--text-light);
         font-weight: 800;
         text-decoration: none;
     }
@@ -842,7 +889,7 @@ footer p {
     .admin-table-card {
         overflow-x: auto;
         background: var(--paper-soft);
-        border: 1px solid rgba(4, 71, 28, 0.18);
+        border: 1px solid var(--border-dark-green);
         border-radius: 14px;
         box-shadow: var(--shadow-soft);
     }
@@ -858,19 +905,19 @@ footer p {
         padding: 16px;
         text-align: left;
         vertical-align: middle;
-        border-bottom: 1px solid rgba(4, 71, 28, 0.12);
+        border-bottom: 1px solid var(--border-dark-green);
     }
 
     .admin-table th {
-        color: var(--paper-soft);
-        background: #06140c;
+        color: var(--text-light);
+        background: var(--header-green);
         font-size: 0.78rem;
         letter-spacing: 0.06em;
         text-transform: uppercase;
     }
 
     .admin-table tbody tr:hover {
-        background: #edf3e7;
+        background: var(--paper-soft);
     }
 
     .admin-vehicle-cell {
@@ -886,12 +933,12 @@ footer p {
         flex-shrink: 0;
         object-fit: cover;
         border-radius: 6px;
-        background: #dce4d7;
+        background: var(--paper-section);
     }
 
     .admin-description {
         max-width: 320px;
-        color: #253329;
+        color: var(--text-body);
         line-height: 1.5;
     }
 
@@ -903,8 +950,8 @@ footer p {
 
     .admin-actions a {
         padding: 8px 10px;
-        color: #03170d;
-        background: rgba(22, 219, 101, 0.2);
+        color: var(--deep-green);
+        background: var(--border-green);
         border-radius: 6px;
         font-weight: 800;
         text-decoration: none;
@@ -916,7 +963,7 @@ footer p {
 
     .admin-empty {
         padding: 28px;
-        color: #253329;
+        color: var(--text-body);
         text-align: center;
         font-weight: 800;
     }
@@ -945,5 +992,148 @@ footer p {
 
         .admin-toolbar {
             justify-content: stretch;
+        }
+    }
+
+/*-----Pour pages réservation--------------------------------*/
+    .reservation-page .login-alert {
+        max-width: 1080px;
+        margin: 0 0 22px;
+    }
+ une location
+    .reservation-selected-card {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 24px;
+        margin-bottom: 24px;
+        overflow: hidden;
+        background: var(--paper-soft);
+        border: 1px solid var(--border-dark-green);
+        border-radius: 14px;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .reservation-selected-card img {
+        width: 100%;
+        height: 100%;
+        min-height: 220px;
+        display: block;
+        object-fit: cover;
+    }
+
+    .reservation-selected-card div {
+        padding: 28px 28px 28px 0;
+    }
+
+    .reservation-selected-card h2 {
+        margin: 14px 0 10px;
+        color: var(--black-forest);
+        font-size: 1.8rem;
+    }
+
+    .reservation-selected-card p {
+        margin: 0;
+        color: var(--text-body);
+        line-height: 1.7;
+    }
+
+    .reservation-form-grid {
+        grid-template-columns: 1.15fr 0.85fr;
+    }
+
+    .reservation-help p {
+        margin: 0 0 14px;
+        color: var(--text-body);
+        line-height: 1.7;
+    }
+
+    .reservation-help p:last-child {
+        margin-bottom: 0;
+    }
+
+    .reservation-admin-links {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-top: 22px;
+    }
+
+    .reservation-admin-links form {
+        margin: 0;
+    }
+
+    .reservation-admin-links .btn {
+        padding: 10px 16px;
+        color: var(--text-light);
+        background: var(--danger);
+        border: 0;
+        border-radius: 8px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    @media (max-width: 760px) {
+        .reservation-selected-card,
+        .reservation-form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .reservation-selected-card div {
+            padding: 24px;
+        }
+
+        .reservation-admin-links {
+            align-items: stretch;
+            flex-direction: column;
+        }
+    }
+
+/*-----Pour pages entrepôt--------------------------------*/
+    .warehouse-form-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .warehouse-help p {
+        margin: 0 0 14px;
+        color: var(--text-body);
+        line-height: 1.7;
+    }
+
+    .warehouse-help p:last-child {
+        margin-bottom: 0;
+    }
+
+    .warehouse-detail-card {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .warehouse-detail-item {
+        padding: 20px;
+        background: var(--paper-section);
+        border: 1px solid var(--border-dark-green);
+        border-radius: 10px;
+    }
+
+    .warehouse-detail-item span {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--black-forest);
+        font-size: 0.8rem;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+
+    .warehouse-detail-item strong {
+        color: var(--text-body);
+        font-size: 1.1rem;
+    }
+
+    @media (max-width: 760px) {
+        .warehouse-form-grid,
+        .warehouse-detail-card {
+            grid-template-columns: 1fr;
         }
     }
