@@ -2,6 +2,9 @@ services:
 
   php:
     build: .
+    container_name: php-back
+    dns:
+      - 8.8.8.8
     volumes:
       - .:/var/www/html
     ports:
@@ -25,6 +28,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:latest
+    container_name: phpmyadmin
     restart: always
     ports:
       - 9000:80
