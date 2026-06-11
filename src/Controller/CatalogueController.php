@@ -29,6 +29,9 @@ final class CatalogueController extends AbstractController
         foreach ($vehiculesdb as $vehicule) {
             $data[] = [
                 'id' => $vehicule->getId(),
+                'nom' => $vehicule->getNom(),
+                'type' => $vehicule->getType(),
+                'image' => $vehicule->getImage(),
             ];
         }
 
