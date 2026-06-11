@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [
     CommonModule, 
-    RouterLink // 👈 2. Déclare-le dans les imports du composant
+    RouterLink 
   ], 
   templateUrl: './tank-card.component.html',
   styleUrl: './tank-card.component.css'
