@@ -38,3 +38,8 @@
     --shadow-strong: 0 24px 55px rgba(0, 0, 0, 0.28);
     --shadow-cta: 0 10px 24px rgba(22, 219, 101, 0.24);
 }
+
+body {
+  background-color: var(--page-green);
+  color: var(--text-light);
+}
