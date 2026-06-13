@@ -1,24 +1,39 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-reservation',
-  templateUrl: './reservation.component.html'
+  standalone: true,
+  templateUrl: './reservation.component.html',
+  styleUrls: ['./reservation.component.css'],
+  imports: [CommonModule]
+
 })
 export class ReservationComponent implements OnInit {
-  tankId!: string | null;
-  tank: any;
+  tank: any = null;
+  loading: boolean = true;
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private apiService: ApiService
+  ) {}
 
   ngOnInit(): void {
-    this.tankId = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
     
-    if (this.tankId) {
-      this.apiService.getTankById(this.tankId).subscribe(data => {
+    if (id) {
+      this.apiService.getTankById(id).subscribe({
+        next:(data) => {
         this.tank = data;
-      });
+        this.loading = false;
+      },
+      error: (error:any) => {
+        console.error('Error fetching tank details:', error);
+        this.loading = false;
+      }
+    });
     }
   }
 }

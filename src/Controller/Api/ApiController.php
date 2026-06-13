@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route; // 💡 Bien vérifier "Attribute" ici aussi
 
 class ApiController extends AbstractController
 {
@@ -14,10 +14,5 @@ class ApiController extends AbstractController
         $response = $this->json(['status' => 'OK', 'message' => 'Stack opérationnelle']);
         $response->headers->set('Access-Control-Allow-Origin', '*'); 
         return $response;
-
-        return $this->json([
-            'status' => 'success',
-            'message' => 'L\'API Symfony de TankRent répond parfaitement !'
-        ]);
     }
 }

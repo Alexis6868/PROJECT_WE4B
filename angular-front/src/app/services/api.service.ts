@@ -19,4 +19,8 @@ export class ApiService {
   getTanks(): Observable<any[]> {
   return this.http.get<any[]>(`${this.apiUrl}/api/vehicules`);
   }
+  
+  getTankById(id: string): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/api/vehicules/${id}`);
+}
 }
