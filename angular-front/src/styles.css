@@ -39,6 +39,12 @@
     --shadow-cta: 0 10px 24px rgba(22, 219, 101, 0.24);
 }
 
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
 body {
   background-color: var(--page-green);
   color: var(--text-light);
