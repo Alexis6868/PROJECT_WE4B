@@ -55,12 +55,12 @@
   display: inline-block;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.active {
   color: var(--malachite-hover);
 }
 
-.active {
-  color: var(--danger) !important;
-  border-bottom: 2px solid var(--page-green);
+.nav-links a.active {
+  border-bottom: 2px solid currentColor;
   padding-bottom: 5px;
 }
