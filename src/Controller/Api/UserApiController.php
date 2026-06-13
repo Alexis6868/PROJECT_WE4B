@@ -32,6 +32,8 @@ class UserApiController extends AbstractController
 
 
         $user = new User();
+        $user->setPrenom($data['prenom']);
+        $user->setNom($data['nom']);
         $user->setEmail($data['email']);
         $user->setRoles(['ROLE_USER']); 
 

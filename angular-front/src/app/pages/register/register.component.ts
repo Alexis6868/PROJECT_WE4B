@@ -20,10 +20,13 @@ registerForm: FormGroup;
     private authService: AuthService,
     private router: Router
   ) {
-    // On définit les champs et les validations (WE4B : Validation côté frontend)
+
     this.registerForm = this.fb.group({
+      nom: ['', [Validators.required]],
+      prenom: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      tel: [''] 
     });
   }
 
