@@ -6,7 +6,7 @@
 
 .hero-section {
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1630161861115-02123f0837e5?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
-  height: 80vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,41 +134,65 @@
 
 .catalogue-callout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
-  gap: 36px;
+  grid-template-columns: 1fr;
   align-items: center;
   max-width: 1100px;
   margin: 0 auto 96px;
   padding: 0 24px;
+  overflow: hidden;
 }
 
-.catalogue-callout > img {
+.catalogue-callout > img,
+.catalogue-callout-content img {
+  display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  max-width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: var(--deep-green);
+  border: 1px solid var(--border-green);
   border-radius: 8px;
   box-shadow: var(--shadow-soft);
+  box-sizing: border-box;
 }
 
 .catalogue-callout-content {
   background: var(--paper-soft);
   border: 1px solid var(--border-green);
   border-radius: 8px;
-  padding: 30px;
+  padding: 36px;
   color: var(--text-body);
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-soft);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.catalogue-callout-content img {
+  margin: 14px 0 24px;
 }
 
 .catalogue-callout-content h2 {
   color: var(--text-dark);
   font-size: 28px;
-  margin: 0 0 14px;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  text-align: center;
 }
 
-.catalogue-callout-content a {
-  display: inline-block;
-  margin-top: 12px;
-  color: var(--deep-green);
-  font-weight: 700;
+.catalogue-callout-content p:not(.home-kicker) {
+  margin: 0;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.catalogue-callout-content .cta-button {
+  display: block;
+  margin-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .home-kicker {
@@ -187,6 +211,11 @@
   .feature-image,
   .catalogue-callout > img {
     aspect-ratio: 4 / 3;
+  }
+
+  .catalogue-callout-content {
+    margin-left: 0;
+    padding: 28px;
   }
 }
 

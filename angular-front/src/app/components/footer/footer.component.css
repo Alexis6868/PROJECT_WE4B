@@ -77,4 +77,8 @@
   .logo2 {
     font-size: 0.9rem;
   }
+  
+  .espace {
+    display: none;
+  }
 }
