@@ -2,6 +2,7 @@
     <img src="{{ tank.image }}" alt="{{ tank.nom }}" class="tank-image">
   <h3>{{ tank.nom }}</h3>
   <p>Type : {{ tank.type }}</p>
+  <p>Poids : {{ tank.masse }} tonnes</p>
 <a [routerLink]="['/reservation', tank.id]" 
    class="inline-block bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition-colors text-center no-underline">
   Réserver ce blindé

@@ -19,4 +19,11 @@ export class ApiService {
   getTanks(): Observable<any[]> {
   return this.http.get<any[]>(`${this.apiUrl}/api/vehicules`);
   }
+  
+  getTankById(id: string): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/api/vehicules/${id}`);
+}
+  createReservation(reservationData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/reservations/new`, reservationData);
+  }
 }

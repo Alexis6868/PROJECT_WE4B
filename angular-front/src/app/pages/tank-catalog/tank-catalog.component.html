@@ -2,9 +2,17 @@
   
   <app-search-bar (searchChange)="filterCatalog($event)"></app-search-bar>
 
+  <div class="sort-container mb-4">
+    <select (change)="sortCatalog($any($event.target).value)" class="form-select">
+      <option value="nom">Nom (A-Z)</option>
+      <option value="masseAsc">Poids : Du plus léger au plus lourd</option>
+      <option value="masseDesc">Poids : Du plus lourd au plus léger</option>
+    </select>
+  </div>
+
   <div class="tanks-grid">
     <app-tank-card *ngFor="let unTank of filteredTanks" [tank]="unTank"> 
     </app-tank-card>
-
   </div>
+
 </div>
