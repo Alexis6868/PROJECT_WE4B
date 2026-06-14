@@ -11,14 +11,23 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  
+  menuOpen = false;
 
   constructor(
     public authService: AuthService, 
     private router: Router
   ) {}
 
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu(): void {
+    this.menuOpen = false;
+  }
+
   onLogout(): void {
+    this.closeMenu();
     this.authService.logout();
     this.router.navigate(['/login']);
   }

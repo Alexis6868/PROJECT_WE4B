@@ -1,25 +1,40 @@
-<nav class="navbar">
-  <div class="logo">TankRent</div>
-  <div class="nav-links">
-    <a routerLink="/home" routerLinkActive="active">Home</a>
-    <a routerLink="/tanks" routerLinkActive="active">Catalogue</a>
-    <a routerLink="/contact" routerLinkActive="active">Contact</a>
+<nav class="navbar navbar-expand-custom">
+  <div class="container-fluid navbar-inner">
+    <a routerLink="/" class="logo navbar-brand" (click)="closeMenu()">
+      <span class="logo1">Tank</span>
+      <span class="logo2">Rent</span>
+    </a>
 
-    <ng-container *ngIf="!(authService.isLoggedIn$ | async)">
-      <a routerLink="/login" routerLinkActive="active">Login</a>
-      <a routerLink="/register" routerLinkActive="active">Register</a>
-    </ng-container>
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMenu()"
+      aria-controls="mainNavbar"
+      [attr.aria-expanded]="menuOpen"
+      aria-label="Ouvrir le menu"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <ng-container *ngIf="authService.isLoggedIn$ | async">
-      <span class="user-name" style="color: #666; margin-left: 10px; font-size: 14px;">
-        Pilote : <strong style="color: #fff;">{{ authService.userName$ | async }}</strong>
-      </span>
-      <button 
-        (click)="onLogout()" 
-        class="logout-btn" 
-        style="background: #dc2626; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; text-transform: uppercase; margin-left: 10px;">
-        Déconnexion
-      </button>
-    </ng-container>
+    <div class="collapse navbar-collapse nav-links" [class.show]="menuOpen" id="mainNavbar">
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</a>
+        <a class="nav-link" routerLink="/tanks" routerLinkActive="active" (click)="closeMenu()">Catalogue</a>
+
+        <ng-container *ngIf="!(authService.isLoggedIn$ | async)">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</a>
+          <a class="nav-link" routerLink="/register" routerLinkActive="active" (click)="closeMenu()">Register</a>
+        </ng-container>
+
+        <ng-container *ngIf="authService.isLoggedIn$ | async">
+          <span class="user-name">
+            Pilote : <strong>{{ authService.userName$ | async }}</strong>
+          </span>
+          <button type="button" (click)="onLogout()" class="logout-btn">
+            Deconnexion
+          </button>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </nav>

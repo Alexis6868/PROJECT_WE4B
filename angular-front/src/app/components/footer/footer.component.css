@@ -22,6 +22,7 @@
 .footer-content {
   color: var(--text-light);
   justify-self: center;
+  bottom: 0;
 }
 
 .footer-brand {
@@ -48,4 +49,32 @@
 
 .logo2{
   color: var(--malachite);
+}
+
+
+@media (max-width: 800px) {
+  .footer {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 10px 16px;
+    text-align: center;
+  }
+
+  .footer-brand,
+  .footer-content,
+  .footer-contact {
+    justify-self: center;
+    text-align: center;
+  }
+
+  .footer-content,
+  .footer-tagline,
+  .footer-contact {
+    font-size: 0.75rem;
+  }
+
+  .logo1,
+  .logo2 {
+    font-size: 0.9rem;
+  }
 }
