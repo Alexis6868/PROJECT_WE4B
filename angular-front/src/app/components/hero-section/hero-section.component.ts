@@ -6,9 +6,6 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
-import * as THREE from 'three';
-import { gsap } from 'gsap';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'; // <-- Ajoute ceci !
 
 interface StatCard { label: string; value: string; desc: string; }
 
