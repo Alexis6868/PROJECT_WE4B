@@ -30,7 +30,6 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
-        // 🕵️‍♂️ ÉTAPE DE SÉCURITÉ : On affiche EXACTEMENT ce que Symfony renvoie
         console.log("--- DEBUG LOGIN ---");
         console.log("Réponse brute de Symfony :", response);
 
