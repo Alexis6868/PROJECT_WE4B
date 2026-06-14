@@ -1,11 +1,21 @@
 <div class="card">
-    <img src="{{ tank.image }}" alt="{{ tank.nom }}" class="tank-image" loading="lazy">
-  <h3>{{ tank.nom }}</h3>
-  <p>Type : {{ tank.type }}</p>
-  <p>Poids : {{ tank.masse }} tonnes</p>
-<a [routerLink]="['/reservation', tank.id]" 
-   class="inline-block bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition-colors text-center no-underline">
-  Réserver ce blindé
-</a>
+  <div class="card-image-wrap">
+    <img *ngIf="tank.image" [src]="tank.image" [alt]="tank.nom" class="card-image" loading="lazy">
+    <div *ngIf="!tank.image" class="card-no-image">
+      <span>Pas d'image</span>
+    </div>
+    <span *ngIf="tank.pays" class="card-badge">{{ tank.pays }}</span>
+    <div class="card-overlay">
+      <a [routerLink]="['/reservation', tank.id]" class="card-overlay-btn">
+        Réserver <span>→</span>
+      </a>
+    </div>
+  </div>
 
+  <div class="card-body">
+    <p class="card-type">{{ tank.type }}</p>
+    <h3 class="card-name">{{ tank.nom }}</h3>
+    <p class="card-mass">{{ tank.masse }} t</p>
+    <p *ngIf="tank.description" class="card-desc">{{ tank.description }}</p>
+  </div>
 </div>

@@ -1,76 +1,119 @@
+<app-hero-section></app-hero-section>
+
 <div class="home-container">
-  <header class="hero-section">
-    <div class="hero-content">
-      <h1>Dominez le terrain avec <span class="highlight">TankRent</span></h1>
-      <p>La première plateforme de location de véhicules blindés pour particuliers et professionnels. Fiabilité militaire, puissance brute, service clé en main.</p>
-      <button class="cta-button" routerLink="/tanks">Découvrir l'arsenal</button>
-    </div>
-  </header>
 
-  <section class="features-section">
-    <div class="feature-card">
-      <div class="icon"></div>
-      <h3>Blindage Certifié</h3>
-      <p>Tous nos véhicules sont révisés et entretenus selon des standards rigoureux pour garantir une sécurité maximale.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon"></div>
-      <h3>Disponibilité Immédiate</h3>
-      <p>Réservez en ligne et récupérez votre véhicule dans l'un de nos hangars partenaires en moins de 24 heures.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon"></div>
-      <h3>Offres Flexibles</h3>
-      <p>Location à la journée pour vos événements ou achat permanent pour enrichir votre collection personnelle.</p>
-    </div>
-  </section>
-
-
-
-
-
-
-
-  <div class="feature-grid">
-      <div class="feature-card">
-          <h3>Immersion historique</h3>
-          <p>Installez vos visiteurs au premier rang d'une reconstitution marquante, de la Seconde Guerre mondiale aux véhicules contemporains. Nos blindés apportent une présence réaliste, impressionnante et parfaitement adaptée aux événements culturels ou pédagogiques.</p>
+  <!-- ── Stats bar ─────────────────────────────────── -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item" reveal>
+        <span class="stat-value">{{ tankCount }}</span>
+        <span class="stat-label">Blindés en flotte</span>
       </div>
-
-      <figure class="feature-image">
-          <img src="https://images.unsplash.com/photo-1631570323109-745d1f7d2b74?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="M4A2 sur un champ plat">
-      </figure>
-
-      <figure class="feature-image feature-image-tall">
-          <img src="https://images.pexels.com/photos/10209506/pexels-photo-10209506.jpeg" alt="Événement historique avec véhicules militaires">
-      </figure>
-
-      <div class="feature-card">
-          <h3>Une arrivée vraiment mémorable</h3>
-          <p>Parce qu'une limousine ne suffit pas toujours à marquer les esprits, TankRent vous propose une entrée spectaculaire pour vos mariages, tournages ou soirées privées. Un blindé transforme une simple arrivée en moment que personne n'oublie.</p>
+      <div class="stat-divider"></div>
+      <div class="stat-item" reveal [revealDelay]="100">
+        <span class="stat-value">{{ countryCount }}</span>
+        <span class="stat-label">Pays d'origine</span>
       </div>
-
-      <div class="feature-card">
-          <h3>Des événements sur mesure</h3>
-          <p>Airsoft, paintball, festivals, démonstrations ou opérations de communication : nous adaptons chaque prestation à votre terrain, à votre public et à vos objectifs. Notre équipe vous accompagne pour construire une expérience forte, encadrée et cohérente.</p>
+      <div class="stat-divider"></div>
+      <div class="stat-item" reveal [revealDelay]="200">
+        <span class="stat-value">24h</span>
+        <span class="stat-label">Délai de livraison</span>
       </div>
-
-      <figure class="feature-image">
-          <img src="https://pbs.twimg.com/media/ErSgvVKXEAIvNJr?format=jpg&name=small" alt="T90-A durant le Tank Biathlon">
-      </figure>
+      <div class="stat-divider"></div>
+      <div class="stat-item" reveal [revealDelay]="300">
+        <span class="stat-value">5★</span>
+        <span class="stat-label">Satisfaction client</span>
+      </div>
+    </div>
   </div>
 
-  <section class="catalogue-callout">
-      <img src="https://images.pexels.com/photos/9250/green-attraction-war-museum.jpg" alt="MBT Leopard 2A5 dans une exposition">
+  <!-- ── Features 3 colonnes ─────────────────────── -->
+  <section class="features-section">
+    <div class="section-header" reveal>
+      <span class="section-kicker">Nos atouts</span>
+      <h2 class="section-title">Pourquoi choisir <em>TankRent</em></h2>
+    </div>
 
-      <div class="catalogue-callout-content">
-          <p class="home-kicker">Catalogue</p>
-          <h2>Choisissez le blindé adapté à votre mission</h2>
-          <p>Comparez les modèles, leur état et leurs caractéristiques avant de planifier votre réservation.</p>
-
-          <a routerLink="/tanks" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-              Explorer la flotte
-          </a>
+    <div class="features-grid">
+      <div class="feature-card" reveal [revealDelay]="0">
+        <span class="feature-num">01</span>
+        <h3 class="feature-title">Blindage Certifié</h3>
+        <p class="feature-desc">Tous nos véhicules sont révisés et entretenus selon des standards rigoureux pour garantir une sécurité maximale en toutes circonstances.</p>
+        <div class="feature-bar"></div>
       </div>
+
+      <div class="feature-card" reveal [revealDelay]="120">
+        <span class="feature-num">02</span>
+        <h3 class="feature-title">Disponibilité Immédiate</h3>
+        <p class="feature-desc">Réservez en ligne et récupérez votre véhicule dans l'un de nos hangars partenaires en moins de 24 heures, prêt à l'emploi.</p>
+        <div class="feature-bar"></div>
+      </div>
+
+      <div class="feature-card" reveal [revealDelay]="240">
+        <span class="feature-num">03</span>
+        <h3 class="feature-title">Offres Flexibles</h3>
+        <p class="feature-desc">Location à la journée pour vos événements ou abonnement longue durée pour les professionnels. Tarifs négociables sur volume.</p>
+        <div class="feature-bar"></div>
+      </div>
+    </div>
   </section>
+
+  <!-- ── Éditorial ────────────────────────────────── -->
+  <section class="editorial-section">
+
+    <div class="editorial-row" reveal>
+      <figure class="editorial-figure">
+        <img src="https://images.unsplash.com/photo-1631570323109-745d1f7d2b74?q=80&w=1074&auto=format&fit=crop" alt="M4A2 Sherman en démonstration">
+        <div class="editorial-figure-overlay"></div>
+      </figure>
+      <div class="editorial-content">
+        <span class="editorial-kicker">Immersion historique</span>
+        <h2 class="editorial-heading">Vivez l'histoire de l'intérieur</h2>
+        <p class="editorial-body">Installez vos visiteurs au premier rang d'une reconstitution marquante, de la Seconde Guerre mondiale aux véhicules contemporains. Nos blindés apportent une présence réaliste, impressionnante et parfaitement adaptée aux événements culturels ou pédagogiques.</p>
+        <a routerLink="/tanks" class="editorial-link">Voir le catalogue <span>→</span></a>
+      </div>
+    </div>
+
+    <div class="editorial-row editorial-row--reverse" reveal [revealDelay]="80">
+      <figure class="editorial-figure">
+        <img src="https://images.pexels.com/photos/10209506/pexels-photo-10209506.jpeg" alt="Événement spécial avec blindé">
+        <div class="editorial-figure-overlay"></div>
+      </figure>
+      <div class="editorial-content">
+        <span class="editorial-kicker">Une arrivée mémorable</span>
+        <h2 class="editorial-heading">Parce qu'une limousine ne suffit plus</h2>
+        <p class="editorial-body">TankRent vous propose une entrée spectaculaire pour vos mariages, tournages ou soirées privées. Un blindé transforme une simple arrivée en moment que personne n'oublie — et dont tout le monde parle encore le lendemain.</p>
+        <a routerLink="/tanks" class="editorial-link">Explorer les modèles <span>→</span></a>
+      </div>
+    </div>
+
+    <div class="editorial-row" reveal [revealDelay]="80">
+      <figure class="editorial-figure">
+        <img src="https://pbs.twimg.com/media/ErSgvVKXEAIvNJr?format=jpg&name=small" alt="T-90A Tank Biathlon">
+        <div class="editorial-figure-overlay"></div>
+      </figure>
+      <div class="editorial-content">
+        <span class="editorial-kicker">Sur mesure</span>
+        <h2 class="editorial-heading">Des événements taillés pour l'impact</h2>
+        <p class="editorial-body">Airsoft, paintball, festivals, démonstrations ou opérations de communication : nous adaptons chaque prestation à votre terrain, à votre public et à vos objectifs. Notre équipe vous accompagne du brief à la clôture.</p>
+        <a routerLink="/tanks" class="editorial-link">Découvrir nos offres <span>→</span></a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── CTA strip ────────────────────────────────── -->
+  <section class="cta-strip" reveal>
+    <div class="cta-strip-glow"></div>
+    <div class="cta-strip-inner">
+      <span class="cta-strip-kicker">Prêt à embarquer ?</span>
+      <h2 class="cta-strip-title">Choisissez votre prochain blindé</h2>
+      <p class="cta-strip-sub">Comparez notre flotte de {{ tankCount }} véhicules et réservez en quelques clics</p>
+      <a routerLink="/tanks" routerLinkActive="active" class="cta-strip-btn">
+        Explorer la flotte
+        <span class="cta-strip-arrow">→</span>
+      </a>
+    </div>
+  </section>
+
 </div>

@@ -1,24 +1,56 @@
-<form [formGroup]="reservationForm" (ngSubmit)="onSubmit()" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold uppercase tracking-wide text-gray-700 mb-1">Date de début</label>
-          <input 
-            type="date" 
-            formControlName="dateDebut"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+<div class="resa-page">
+  <div class="resa-glow"></div>
+
+  <!-- Chargement -->
+  <div *ngIf="loading" class="resa-loading">
+    <div class="resa-spinner"></div>
+    <p>Chargement du blindé…</p>
+  </div>
+
+  <div *ngIf="!loading" class="resa-layout">
+
+    <!-- Fiche blindé -->
+    <div class="resa-tank-card" *ngIf="tank">
+      <div class="resa-tank-image-wrap">
+        <img *ngIf="tank.image" [src]="tank.image" [alt]="tank.nom" class="resa-tank-image">
+        <div *ngIf="!tank.image" class="resa-tank-no-image">Pas d'image</div>
+        <span *ngIf="tank.pays" class="resa-tank-badge">{{ tank.pays }}</span>
+      </div>
+      <div class="resa-tank-info">
+        <span class="resa-tank-type">{{ tank.type }}</span>
+        <h2 class="resa-tank-name">{{ tank.nom }}</h2>
+        <div class="resa-tank-specs">
+          <div class="spec">
+            <span class="spec-label">Masse</span>
+            <span class="spec-value">{{ tank.masse }} t</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire réservation -->
+    <div class="resa-form-card">
+      <span class="resa-kicker">Réservation</span>
+      <h2 class="resa-form-title">Choisir vos dates</h2>
+
+      <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()" class="resa-form">
+
+        <div class="field">
+          <label class="field-label">Date de début</label>
+          <input type="date" formControlName="dateDebut" class="field-input">
         </div>
 
-        <div>
-          <label class="block text-xs font-bold uppercase tracking-wide text-gray-700 mb-1">Date de fin (Restitution)</label>
-          <input 
-            type="date" 
-            formControlName="dateFin"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+        <div class="field">
+          <label class="field-label">Date de fin (restitution)</label>
+          <input type="date" formControlName="dateFin" class="field-input">
         </div>
 
-        <button 
-          type="submit" 
-          [disabled]="reservationForm.invalid"
-          class="w-full bg-orange-500 text-white font-bold py-4 rounded-lg shadow-lg hover:bg-orange-600 transition-colors uppercase tracking-wider text-sm mt-4 disabled:opacity-50 disabled:cursor-not-allowed">
+        <button type="submit" [disabled]="reservationForm.invalid" class="resa-btn">
           Confirmer la demande
         </button>
+
       </form>
+    </div>
+
+  </div>
+</div>

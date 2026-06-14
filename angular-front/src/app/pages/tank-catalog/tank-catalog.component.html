@@ -1,25 +1,26 @@
 <div class="catalog-container">
 
+  <h1>Arsenal <span>disponible</span></h1>
+
   <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
 
   <app-search-bar (searchChange)="filterCatalog($event)"></app-search-bar>
 
   <div class="filters-row">
     <select (change)="sortCatalog($any($event.target).value)" class="filter-select">
-      <option value="nom">Nom (A-Z)</option>
-      <option value="masseAsc">Poids : léger → lourd</option>
-      <option value="masseDesc">Poids : lourd → léger</option>
+      <option value="nom">Nom (A–Z)</option>
+      <option value="masseAsc">Masse : léger → lourd</option>
+      <option value="masseDesc">Masse : lourd → léger</option>
     </select>
 
     <select (change)="filterByPays($any($event.target).value)" class="filter-select">
-      <option value="">🌍 Tous les pays</option>
+      <option value="">Tous les pays</option>
       <option *ngFor="let pays of availableCountries" [value]="pays">{{ pays }}</option>
     </select>
   </div>
 
   <div class="tanks-grid">
-    <app-tank-card *ngFor="let unTank of filteredTanks" [tank]="unTank"> 
-    </app-tank-card>
+    <app-tank-card *ngFor="let unTank of filteredTanks" [tank]="unTank"></app-tank-card>
   </div>
 
 </div>
