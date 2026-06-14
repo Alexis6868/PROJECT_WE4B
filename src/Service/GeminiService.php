@@ -40,7 +40,7 @@ PROMPT;
                     ['parts' => [['text' => $prompt]]]
                 ],
                 'generationConfig' => [
-                    'temperature'   => 0.1,
+                    'temperature'     => 0.1,
                     'maxOutputTokens' => 1024,
                     'thinkingConfig'  => ['thinkingBudget' => 0],
                 ],

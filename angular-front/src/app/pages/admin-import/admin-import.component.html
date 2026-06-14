@@ -3,23 +3,23 @@
   <p class="subtitle">Recherche automatique via Gemini AI + Wikipedia</p>
 
   <!-- Formulaire de recherche -->
-  <div class="search-form" *ngIf="etat !== 'saved'">
+  <form class="search-form" *ngIf="etat !== 'saved'" (ngSubmit)="rechercher()">
     <input
       type="text"
       [(ngModel)]="searchTerm"
+      name="searchTerm"
       placeholder="Ex: Tigre II, T-34, Abrams..."
       class="search-input"
-      (keyup.enter)="rechercher()"
       [disabled]="etat === 'loading' || etat === 'saving'"
     />
     <button
-      (click)="rechercher()"
+      type="submit"
       class="btn-search"
       [disabled]="!searchTerm.trim() || etat === 'loading' || etat === 'saving'"
     >
       {{ etat === 'loading' ? 'Recherche...' : 'Rechercher avec l\'IA' }}
     </button>
-  </div>
+  </form>
 
   <!-- Chargement -->
   <div class="status loading" *ngIf="etat === 'loading'">
