@@ -6,6 +6,9 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
+import * as THREE from 'three';
+import { gsap } from 'gsap';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'; // <-- Ajoute ceci !
 
 interface StatCard { label: string; value: string; desc: string; }
 
@@ -84,14 +87,59 @@ export class HeroSectionComponent implements AfterViewInit, OnDestroy {
     } catch { return false; }
   }
 
-private async loadTankModel(): Promise<void> {
+  private async initThree(): Promise<void> {
+    const w = window.innerWidth, h = window.innerHeight;
+    const canvas = this.canvasRef.nativeElement;
+
+    // Renderer
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    this.renderer.setSize(w, h);
+    this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1.7;
+
+    // Scene + fog — slightly lighter deep blue-dark
+    this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0x10101e);
+    this.scene.fog = new THREE.Fog(0x10101e, 20, 42);
+
+    // Camera — starts far for GSAP zoom
+    this.camera = new THREE.PerspectiveCamera(44, w / h, 0.1, 100);
+    this.camera.position.set(0, 1.5, this.reducedMotion ? 7.5 : 14);
+    this.camera.lookAt(0, 0.35, 0);
+
+    this.setupLights();
+    this.scene.add(this.buildGround());
+    this.particles = this.buildParticles();
+    this.scene.add(this.particles);
+
+    // Start the render loop immediately (tank will appear when loaded)
+    this.startLoop();
+
+    // Load AMX-56 USDZ model; fall back to procedural tank on failure
+    await this.loadTankModel();
+
+    // GSAP camera zoom-in after model is ready
+    if (!this.reducedMotion) {
+      gsap.to(this.camera.position, {
+        z: 7.5, duration: 2.8, ease: 'power3.out',
+        onUpdate: () => this.camera.lookAt(0, 0.35, 0),
+      });
+    }
+  }
+
+  private async loadTankModel(): Promise<void> {
     try {
       const { GLTFLoader } = await import('three/examples/jsm/loaders/GLTFLoader.js');
-      const loader = new GLTFLoader();
-      const gltf = await loader.loadAsync('/assets/amx_56_lowpoly.glb');
 
-      // Le modèle 3D est dans gltf.scene
-      const group = gltf.scene;
+const loader = new GLTFLoader();
+
+const gltf = await loader.loadAsync('assets/amx_56_lowpoly.glb');
+
+// le modèle 3D est dans gltf.scene
+const group = gltf.scene;
 
       // Apply dark metallic material to all meshes
       const darkMat = new THREE.MeshStandardMaterial({
@@ -101,7 +149,6 @@ private async loadTankModel(): Promise<void> {
         color: 0xff7a00, metalness: 0.9, roughness: 0.12,
         emissive: new THREE.Color(0xff4400), emissiveIntensity: 0.4,
       });
-
       let meshIndex = 0;
       group.traverse((obj: THREE.Object3D) => {
         if (obj instanceof THREE.Mesh) {
@@ -118,19 +165,15 @@ private async loadTankModel(): Promise<void> {
       const maxDim = Math.max(size.x, size.y, size.z);
       if (maxDim > 0) group.scale.setScalar(4 / maxDim);
 
-      // Recalculer la box APRÈS le scale pour avoir les bonnes dimensions
+      // Place on ground
       const box2 = new THREE.Box3().setFromObject(group);
-      
-      // Place on ground (ajuste le -0.34 si le tank est sous le sol)
-      group.position.y = -box2.min.y; 
+      group.position.y = -box2.min.y - 0.34;
       group.rotation.y = Math.PI / 7;
 
-      // --- LES DEUX LIGNES CRUCIALES AJOUTÉES ICI ---
-      this.tank = group;
-      this.scene.add(this.tank); // <-- C'était ça !
-
+      this.tank = group as unknown as THREE.Group;
+      this.scene.add(this.tank);
     } catch (e) {
-      console.warn('GLB load failed, using procedural tank:', e);
+      console.warn('USDZ load failed, using procedural tank:', e);
       this.tank = this.buildTank();
       this.scene.add(this.tank);
     }
