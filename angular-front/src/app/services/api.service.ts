@@ -38,9 +38,7 @@ export class ApiService {
   }
 
   importTank(tankData: any): Observable<any> {
-    // Invalide le cache des tanks après l'import
     this.tanksCache$ = null;
     return this.http.post(`${this.apiUrl}/api/admin/vehicules/import`, tankData);
   }
-}
 }

@@ -1,0 +1,52 @@
+<section class="hs-hero">
+
+  <!-- Fond grille industrielle -->
+  <div class="hs-grid" aria-hidden="true"></div>
+
+  <!-- Halo orange central -->
+  <div class="hs-glow" aria-hidden="true"></div>
+
+  <!-- Scène 3D (canvas plein écran) -->
+  <canvas #heroCanvas class="hs-canvas" [class.hs-hidden]="webglFailed || isMobile"></canvas>
+
+  <!-- Fallback no-WebGL / mobile : simple lueur ambiante -->
+  <div class="hs-fallback" *ngIf="webglFailed || isMobile" aria-hidden="true">
+    <div class="hs-fallback-orb"></div>
+  </div>
+
+  <!-- Vignette bords -->
+  <div class="hs-vignette" aria-hidden="true"></div>
+
+  <!-- ── GAUCHE : identité + CTA ── -->
+  <div class="hs-left">
+
+    <h1 class="hs-tagline">
+      Rent military-grade<br>
+      <em class="hs-em">power.</em>
+    </h1>
+
+    <p class="hs-sub">Premium armored vehicles.<br>Delivered anywhere, anytime.</p>
+
+    <a routerLink="/tanks" class="hs-cta">
+      Reserve Now
+      <span class="hs-cta-arrow" aria-hidden="true">→</span>
+    </a>
+
+  </div>
+
+  <!-- ── DROITE : 4 stats glassmorphism ── -->
+  <div class="hs-right">
+    <div class="hs-card" *ngFor="let s of stats">
+      <span class="hs-card-label">{{ s.label }}</span>
+      <strong class="hs-card-value">{{ s.value }}</strong>
+      <span class="hs-card-desc">{{ s.desc }}</span>
+    </div>
+  </div>
+
+  <!-- Badge discret en bas -->
+  <div class="hs-badge">
+    <span class="hs-badge-dot"></span>
+    Fleet available worldwide
+  </div>
+
+</section>

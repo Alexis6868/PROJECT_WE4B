@@ -1,0 +1,272 @@
+/* ═══════════════════════════════════════════════════
+   HERO SECTION — TankRent
+   Dark industrial premium · Orange #FF7A00
+   ═══════════════════════════════════════════════════ */
+
+/* ─── Wrapper ─────────────────────────────────────── */
+.hs-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 640px;
+  background: #10101e;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #fff;
+}
+
+/* ─── Grille industrielle ──────────────────────────── */
+.hs-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,122,0,.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,122,0,.028) 1px, transparent 1px);
+  background-size: 68px 68px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── Halo orange central ──────────────────────────── */
+.hs-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  height: 60vh;
+  background: radial-gradient(ellipse at center,
+    rgba(255,122,0,.09) 0%,
+    rgba(255,122,0,.03) 40%,
+    transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── Canvas 3D ────────────────────────────────────── */
+.hs-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 2;
+  pointer-events: none;
+}
+.hs-hidden { display: none !important; }
+
+/* ─── Fallback (no WebGL / mobile) ────────────────── */
+.hs-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.hs-fallback-orb {
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(255,122,0,.13) 0%,
+    transparent 65%);
+}
+
+/* ─── Vignette bords ───────────────────────────────── */
+.hs-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%,
+    transparent 40%,
+    rgba(0,0,0,.38) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ─── Gauche : identité ────────────────────────────── */
+.hs-left {
+  position: relative;
+  z-index: 10;
+  width: 42%;
+  padding-left: clamp(28px, 6vw, 80px);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Tagline */
+.hs-tagline {
+  margin: 0;
+  font-size: clamp(2.6rem, 4.8vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: #fff;
+}
+.hs-em {
+  font-style: italic;
+  color: #ff7a00;
+  background: linear-gradient(135deg, #ff7a00 0%, #ff4d00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Sub */
+.hs-sub {
+  margin: 0;
+  font-size: clamp(0.88rem, 1.3vw, 1.0rem);
+  line-height: 1.65;
+  color: rgba(255,255,255,.4);
+  letter-spacing: 0.02em;
+  max-width: 340px;
+}
+
+/* CTA */
+.hs-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  align-self: flex-start;
+  padding: 14px 34px;
+  background: #ff7a00;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: box-shadow .35s ease, transform .25s ease;
+  will-change: transform;
+}
+.hs-cta:hover {
+  box-shadow:
+    0 0 24px rgba(255,122,0,.55),
+    0 0 64px rgba(255,122,0,.18),
+    0 0 120px rgba(255,122,0,.07);
+  transform: translateY(-2px);
+}
+.hs-cta-arrow {
+  display: inline-block;
+  transition: transform .3s ease;
+}
+.hs-cta:hover .hs-cta-arrow { transform: translateX(5px); }
+
+/* ─── Droite : stats cards ─────────────────────────── */
+.hs-right {
+  position: relative;
+  z-index: 10;
+  margin-left: auto;
+  padding-right: clamp(20px, 4vw, 60px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: 34%;
+}
+
+.hs-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 22px 20px;
+  background: rgba(255,255,255,.04);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px;
+  cursor: default;
+  transition:
+    background .3s ease,
+    border-color .3s ease,
+    transform .28s ease,
+    box-shadow .3s ease;
+  will-change: transform;
+}
+.hs-card:hover {
+  background: rgba(255,122,0,.07);
+  border-color: rgba(255,122,0,.3);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(255,122,0,.12);
+}
+
+.hs-card-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.hs-card-label {
+  margin-top: 5px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+}
+.hs-card-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.hs-card-desc {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,.28);
+  line-height: 1.4;
+}
+
+/* ─── Badge bas ────────────────────────────────────── */
+.hs-badge {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+}
+.hs-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff7a00;
+  box-shadow: 0 0 8px rgba(255,122,0,.8);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: .5; transform: scale(0.75); }
+}
+
+/* ─── Mobile ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hs-hero {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    height: auto;
+    min-height: 100svh;
+    padding: 88px 0 60px;
+    gap: 0;
+  }
+  .hs-left {
+    width: 100%;
+    padding: 0 24px;
+    gap: 22px;
+  }
+  .hs-right {
+    width: 100%;
+    padding: 0 24px;
+    margin-left: 0;
+    margin-top: 36px;
+  }
+  .hs-tagline { font-size: 2.4rem; }
+  .hs-badge { display: none; }
+}

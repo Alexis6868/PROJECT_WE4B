@@ -1,54 +1,60 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow border-0">
-        <div class="card-body p-5">
-          <h2 class="text-center mb-4">Rejoindre la division TankRent</h2>
-          
-          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-             <label class="form-label">Prénom*</label>
-             <input type="text" formControlName="prenom" class="form-control" placeholder="Jean">
-            </div>
+<div class="auth-page">
+  <div class="auth-glow"></div>
 
-            <div class="mb-3">
-                 <label class="form-label">Nom*</label>
-                <input type="text" formControlName="nom" class="form-control" placeholder="Martin">
-            </div>
+  <div class="auth-card">
+    <div class="auth-header">
+      <span class="auth-kicker">Recrutement</span>
+      <h1 class="auth-title">Enrôlement</h1>
+    </div>
 
-            <div class="mb-3">
-                 <label class="form-label">Tel</label>
-                <input type="tel" formControlName="tel" class="form-control" placeholder="06 12 34 56 78">
-            </div>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
 
-            <div class="mb-3">
-              <label class="form-label">Email*</label>
-              <input type="email" formControlName="email" class="form-control" placeholder="nom@exemple.com">
-              <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger small">
-                Un email valide est requis.
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Mot de passe*</label>
-              <input type="password" formControlName="password" class="form-control" placeholder="6 caractères minimum">
-              <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger small">
-                Le mot de passe doit faire au moins 6 caractères.
-              </div>
-            <div class="text-muted small">*Champs obligatoires</div>
-            </div>
-            <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary w-100 mt-3">
-              Créer mon compte
-            </button>
-          </form>
-          <div class="text-center mt-4">
-            Déjà un compte ? Connectez-vous <a routerLink="/login" routerLinkActive="active" class="pe-auto">ici</a>.
-          </div>
-          <div *ngIf="message" class="alert alert-info mt-3 text-center">
-            {{ message }}
-          </div>
+      <div class="fields-row">
+        <div class="field">
+          <label class="field-label">Prénom *</label>
+          <input type="text" formControlName="prenom"
+                 class="field-input" placeholder="Jean">
+        </div>
+        <div class="field">
+          <label class="field-label">Nom *</label>
+          <input type="text" formControlName="nom"
+                 class="field-input" placeholder="Martin">
         </div>
       </div>
-    </div>
+
+      <div class="field">
+        <label class="field-label">Téléphone</label>
+        <input type="tel" formControlName="tel"
+               class="field-input" placeholder="06 12 34 56 78">
+      </div>
+
+      <div class="field">
+        <label class="field-label">Email *</label>
+        <input type="email" formControlName="email"
+               class="field-input" placeholder="nom@exemple.com">
+        <span *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+              class="field-error">Un email valide est requis.</span>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Mot de passe *</label>
+        <input type="password" formControlName="password"
+               class="field-input" placeholder="6 caractères minimum">
+        <span *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+              class="field-error">Au moins 6 caractères.</span>
+      </div>
+
+      <div *ngIf="message" class="auth-success">{{ message }}</div>
+
+      <button type="submit" [disabled]="registerForm.invalid" class="auth-btn">
+        Créer mon compte
+      </button>
+
+    </form>
+
+    <p class="auth-footer">
+      Déjà enrôlé ?
+      <a routerLink="/login">Connexion</a>
+    </p>
   </div>
 </div>

@@ -1,0 +1,195 @@
+.resa-page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding: 60px 24px;
+  position: relative;
+}
+.resa-glow {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,122,0,.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* Loading */
+.resa-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  gap: 16px;
+  color: var(--text-2);
+}
+.resa-spinner {
+  width: 38px;
+  height: 38px;
+  border: 3px solid var(--border);
+  border-top-color: var(--orange);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Layout */
+.resa-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 28px;
+  max-width: 1000px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* Fiche blindé */
+.resa-tank-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.resa-tank-image-wrap {
+  position: relative;
+  height: 280px;
+  background: var(--bg-3);
+}
+.resa-tank-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(.9);
+}
+.resa-tank-no-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  font-size: .82rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.resa-tank-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(10,10,10,.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 4px 10px;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.resa-tank-info { padding: 22px 24px; }
+.resa-tank-type {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.resa-tank-name {
+  margin: 8px 0 16px;
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--text);
+}
+.resa-tank-specs { display: flex; gap: 24px; }
+.spec { display: flex; flex-direction: column; gap: 3px; }
+.spec-label {
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.spec-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Formulaire */
+.resa-form-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  position: sticky;
+  top: 80px;
+}
+.resa-kicker {
+  display: block;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+.resa-form-title {
+  margin: 0 0 28px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+}
+.resa-form { display: flex; flex-direction: column; gap: 18px; }
+
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field-label {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.field-input {
+  padding: 12px 14px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text);
+  font-size: .9rem;
+  transition: border-color .2s, box-shadow .2s;
+  color-scheme: dark;
+}
+.field-input:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255,122,0,.1);
+}
+
+.resa-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: box-shadow .3s, transform .25s, opacity .2s;
+}
+.resa-btn:hover:not(:disabled) { box-shadow: var(--glow); transform: translateY(-1px); }
+.resa-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+@media (max-width: 768px) {
+  .resa-layout { grid-template-columns: 1fr; }
+  .resa-form-card { position: static; }
+}

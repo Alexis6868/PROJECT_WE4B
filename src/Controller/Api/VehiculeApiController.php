@@ -27,12 +27,13 @@ class VehiculeApiController extends AbstractController
 
         foreach ($vehicules as $vehicule) {
             $data[] = [
-                'id'   => $vehicule->getId(),
-                'nom'  => $vehicule->getNom(),
-                'pays' => $vehicule->getPays(),
-                'type' => $vehicule->getType(),
-                'masse' => $vehicule->getMasse(),
-                'image' => $vehicule->getImage(),
+                'id'          => $vehicule->getId(),
+                'nom'         => $vehicule->getNom(),
+                'pays'        => $vehicule->getPays(),
+                'type'        => $vehicule->getType(),
+                'masse'       => $vehicule->getMasse(),
+                'image'       => $vehicule->getImage(),
+                'description' => $vehicule->getDescription(),
             ];
         }
 
@@ -60,11 +61,13 @@ class VehiculeApiController extends AbstractController
         }
 
         $data = [
-            'id' => $vehicule->getId(),
-            'nom' => $vehicule->getNom(),
-            'type' => $vehicule->getType(),
-            'masse' => $vehicule->getMasse(),
-            'image' => $vehicule->getImage(),
+            'id'          => $vehicule->getId(),
+            'nom'         => $vehicule->getNom(),
+            'pays'        => $vehicule->getPays(),
+            'type'        => $vehicule->getType(),
+            'masse'       => $vehicule->getMasse(),
+            'image'       => $vehicule->getImage(),
+            'description' => $vehicule->getDescription(),
         ];
 
         $response = new JsonResponse($data);
