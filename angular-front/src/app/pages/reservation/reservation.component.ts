@@ -55,15 +55,13 @@ this.tankId = this.route.snapshot.paramMap.get('id');
     }
   }
 
-  // 🔥 C'est cette méthode qui va déclencher la requête POST vers Symfony
  onSubmit(): void {
     if (this.reservationForm.valid && this.tankId) {
       
       const userId = localStorage.getItem('userId'); 
 
-      // 🚨 ALERTE DE SÉCURITÉ : Si l'ID n'est pas dans le navigateur, on bloque TOUT de suite
       if (!userId) {
-        alert("🚨 Erreur critique : Aucun ID utilisateur trouvé dans le LocalStorage ! Vous devez vous déconnecter et vous reconnecter.");
+        alert(" Erreur critique : Aucun ID utilisateur trouvé dans le LocalStorage ! Vous devez vous déconnecter et vous reconnecter.");
         console.error("localStorage.getItem('userId') a renvoyé :", userId);
         return; 
       }
