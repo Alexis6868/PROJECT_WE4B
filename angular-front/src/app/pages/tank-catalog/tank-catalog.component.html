@@ -1,12 +1,19 @@
 <div class="catalog-container">
-  
+
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+
   <app-search-bar (searchChange)="filterCatalog($event)"></app-search-bar>
 
-  <div class="sort-container mb-4">
-    <select (change)="sortCatalog($any($event.target).value)" class="form-select">
+  <div class="filters-row">
+    <select (change)="sortCatalog($any($event.target).value)" class="filter-select">
       <option value="nom">Nom (A-Z)</option>
-      <option value="masseAsc">Poids : Du plus léger au plus lourd</option>
-      <option value="masseDesc">Poids : Du plus lourd au plus léger</option>
+      <option value="masseAsc">Poids : léger → lourd</option>
+      <option value="masseDesc">Poids : lourd → léger</option>
+    </select>
+
+    <select (change)="filterByPays($any($event.target).value)" class="filter-select">
+      <option value="">🌍 Tous les pays</option>
+      <option *ngFor="let pays of availableCountries" [value]="pays">{{ pays }}</option>
     </select>
   </div>
 

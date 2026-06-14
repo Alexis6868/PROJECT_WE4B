@@ -13,3 +13,5 @@ COPY --link --from=ghcr.io/symfony-cli/symfony-cli:latest /usr/local/bin/symfony
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
+
+CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
