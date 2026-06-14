@@ -1,0 +1,9 @@
+<div class="mb-3">
+  <label class="form-label fw-semibold">Rechercher un modèle</label>
+  <input 
+    type="text" 
+    [(ngModel)]="searchTerm" 
+    (input)="emitSearch()" 
+    class="form-control" 
+    placeholder="Ex: Tiger, Sherman, AMX...">
+</div>

@@ -1,15 +1,25 @@
 <nav class="navbar">
-  <div class="logo">
-    <a routerLink="/" class="nav-link">
-      <span class="logo1">Tank</span>
-      <span class="logo2">Rent</span>
-    </a>
-  </div>
-
+  <div class="logo">TankRent</div>
   <div class="nav-links">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
-    <a routerLink="/tanks" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Catalogue</a>
-    <a routerLink="/connexion" routerLinkActive="active">Connexion</a>
-    <a routerLink="/inscription" routerLinkActive="active">S'inscrire</a>
+    <a routerLink="/home" routerLinkActive="active">Home</a>
+    <a routerLink="/tanks" routerLinkActive="active">Catalogue</a>
+    <a routerLink="/contact" routerLinkActive="active">Contact</a>
+
+    <ng-container *ngIf="!(authService.isLoggedIn$ | async)">
+      <a routerLink="/login" routerLinkActive="active">Login</a>
+      <a routerLink="/register" routerLinkActive="active">Register</a>
+    </ng-container>
+
+    <ng-container *ngIf="authService.isLoggedIn$ | async">
+      <span class="user-name" style="color: #666; margin-left: 10px; font-size: 14px;">
+        Pilote : <strong style="color: #fff;">{{ authService.userName$ | async }}</strong>
+      </span>
+      <button 
+        (click)="onLogout()" 
+        class="logout-btn" 
+        style="background: #dc2626; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; text-transform: uppercase; margin-left: 10px;">
+        Déconnexion
+      </button>
+    </ng-container>
   </div>
 </nav>

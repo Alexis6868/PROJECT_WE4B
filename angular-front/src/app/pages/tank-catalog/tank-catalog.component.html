@@ -1,38 +1,18 @@
 <div class="catalog-container">
-  <h2>Notre Arsenal disponible</h2>
+  
+  <app-search-bar (searchChange)="filterCatalog($event)"></app-search-bar>
 
-  <div class="filter-bar">
-    <input 
-      type="text" 
-      [(ngModel)]="searchQuery" 
-      (input)="applyFilterAndSort()"
-      placeholder="Rechercher un char (ex: Tiger, Sherman...)" 
-    />
-    
-    <select [(ngModel)]="sortBy" (change)="applyFilterAndSort()">
-      <option value="none">Trier par...</option>
-      <option value="priceAsc">Prix : Croissant</option>
-      <option value="priceDesc">Prix : Décroissant</option>
+  <div class="sort-container mb-4">
+    <select (change)="sortCatalog($any($event.target).value)" class="form-select">
+      <option value="nom">Nom (A-Z)</option>
+      <option value="masseAsc">Poids : Du plus léger au plus lourd</option>
+      <option value="masseDesc">Poids : Du plus lourd au plus léger</option>
     </select>
   </div>
 
-  <div class="tank-grid" *ngIf="filteredTanks.length > 0; else emptyCatalog">
-    
-    <div class="tank-card" *ngFor="let tank of filteredTanks">
-      <div class="tank-header">
-        {{ tank.name }}
-      </div>
-      <div class="tank-body">
-        <p><strong>Catégorie :</strong> {{ tank.type }}</p>
-        <button class="rent-button">
-          Louer le monstre
-        </button>
-      </div>
-    </div>
-
+  <div class="tanks-grid">
+    <app-tank-card *ngFor="let unTank of filteredTanks" [tank]="unTank"> 
+    </app-tank-card>
   </div>
 
-  <ng-template #emptyCatalog>
-    <p class="empty-message">Aucun char ne correspond à votre recherche. 📭</p>
-  </ng-template>
 </div>

@@ -1,46 +1,60 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
+import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
+import { TankCardComponent } from '../../components/tank-card/tank-card.component';
 
 @Component({
   selector: 'app-tank-catalog',
   standalone: true,
-  imports: [FormsModule, NgFor, NgIf], 
-  templateUrl: './tank-catalog.component.html',
-  styleUrl: './tank-catalog.component.css'
+  imports: [CommonModule, SearchBarComponent, TankCardComponent],
+  templateUrl: './tank-catalog.component.html'
 })
 export class TankCatalogComponent implements OnInit {
-  allTanks: any[] = [];
-  filteredTanks: any[] = [];
+  allTanks: any[] = [];      
+  filteredTanks: any[] = []; 
+  
 
-  searchQuery: string = '';
-  sortBy: string = 'none';
+  currentSearchTerm: string = '';
+  currentSort: string = 'nom'; 
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.apiService.getTanks().subscribe({
-      next: (data: any[]) => {
-        this.allTanks = data;
-        this.filteredTanks = [...this.allTanks];
-        this.applyFilterAndSort();
-      },
-      error: (err) => console.error('Erreur catalogue :', err)
+    this.apiService.getTanks().subscribe((data) => {
+      this.allTanks = data;
+      this.applyFilterAndSort(); 
     });
   }
 
-  applyFilterAndSort(): void {
-    let result = this.allTanks.filter(tank => 
-      tank.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+
+  filterCatalog(searchTerm: string) {
+    this.currentSearchTerm = searchTerm;
+    this.applyFilterAndSort();
+  }
+
+
+  sortCatalog(sortType: string) {
+    this.currentSort = sortType;
+    this.applyFilterAndSort();
+  }
+
+
+  private applyFilterAndSort() {
+
+    let temp = this.allTanks.filter(tank => 
+      tank.nom.toLowerCase().includes(this.currentSearchTerm.toLowerCase())
     );
 
-    if (this.sortBy === 'priceAsc') {
-      result.sort((a, b) => a.price - b.price);
-    } else if (this.sortBy === 'priceDesc') {
-      result.sort((a, b) => b.price - a.price);
+    if (this.currentSort === 'nom') {
+      temp.sort((a, b) => a.nom.localeCompare(b.nom));
+    } else if (this.currentSort === 'masseAsc') {
+      temp.sort((a, b) => a.masse - b.masse); // Du plus léger au plus lourd
+    } else if (this.currentSort === 'masseDesc') {
+      temp.sort((a, b) => b.masse - a.masse); // Du plus lourd au plus léger
     }
 
-    this.filteredTanks = result;
+
+    this.filteredTanks = temp;
   }
 }

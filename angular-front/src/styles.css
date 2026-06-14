@@ -50,3 +50,7 @@ body {
   background-size: cover;
   background-position: center;
 }
+.sort-container select {
+  max-width: 300px;
+  margin: 15px 0;
+}
