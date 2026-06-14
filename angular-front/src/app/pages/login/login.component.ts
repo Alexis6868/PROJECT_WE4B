@@ -30,10 +30,10 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
-          localStorage.setItem('isLoggedIn', 'true');
-          this.router.navigate(['/tank-catalog']);
+          this.router.navigate(['/tank-catalog']); 
         },
         error: (err) => {
+          console.error(err);
           this.errorMessage = "Erreur lors de la connexion. Vérifiez vos identifiants.";
         }
       });

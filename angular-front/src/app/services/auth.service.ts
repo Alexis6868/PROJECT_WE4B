@@ -1,22 +1,66 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { HttpClient } from '@angular/common/http'; 
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = 'http://localhost:8000/api'; 
 
-  constructor(private http: HttpClient) { }
+  private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasUserId());
+  private userNameSubject = new BehaviorSubject<string | null>(localStorage.getItem('userName'));
 
-  register(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, credentials);
+  isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
+  userName$: Observable<string | null> = this.userNameSubject.asObservable();
+
+  constructor(private http: HttpClient) {} // 👈 Injection du client HTTP
+
+  private hasUserId(): boolean {
+    return !!localStorage.getItem('userId');
   }
 
-  login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials);
+
+  register(userData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, userData); 
   }
 
+
+  login(credentials: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
+      tap(response => {
+        // 🕵️‍♂️ ÉTAPE DE SÉCURITÉ : On affiche EXACTEMENT ce que Symfony renvoie
+        console.log("--- DEBUG LOGIN ---");
+        console.log("Réponse brute de Symfony :", response);
+
+        // On essaie d'extraire l'ID et le Nom de toutes les manières possibles
+        const id = response?.user?.id || response?.id || response?.userId;
+        const name = response?.user?.nom || response?.nom || response?.user?.prenom || response?.username;
+
+        console.log("ID détecté par Angular :", id);
+        console.log("Nom détecté par Angular :", name);
+
+        if (id) {
+          localStorage.setItem('userId', id.toString());
+          this.isLoggedInSubject.next(true);
+        } else {
+          console.error("⚠️ Impossible de stocker l'userId : aucune clé 'id' correspondante trouvée !");
+        }
+
+        if (name) {
+          localStorage.setItem('userName', name);
+          this.userNameSubject.next(name);
+        }
+        console.log("-------------------");
+      })
+    );
+  }
+
+  logout(): void {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    this.isLoggedInSubject.next(false);
+    this.userNameSubject.next(null);
+  }
 }

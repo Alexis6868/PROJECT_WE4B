@@ -13,16 +13,21 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class UserApiController extends AbstractController
 {
-
-    #[Route('/api/register', name: 'api_register', methods: ['POST'])]
+    #[Route('/api/register', name: 'api_register', methods: ['POST', 'OPTIONS'])]
     public function register(
         Request $request, 
         UserPasswordHasherInterface $passwordHasher, 
         EntityManagerInterface $em
     ): JsonResponse {
+        if ($request->getMethod() === 'OPTIONS') {
+            $response = new JsonResponse();
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+            $response->headers->set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+            return $response;
+        }
 
         $data = json_decode($request->getContent(), true);
-
 
         if (!$data || !isset($data['email'], $data['password'])) {
             $response = $this->json(['error' => 'Données incomplètes pour créer le compte.'], Response::HTTP_BAD_REQUEST);
@@ -30,18 +35,15 @@ class UserApiController extends AbstractController
             return $response;
         }
 
-
         $user = new User();
-        $user->setPrenom($data['prenom']);
-        $user->setNom($data['nom']);
+        $user->setPrenom($data['prenom'] ?? '');
+        $user->setNom($data['nom'] ?? '');
         $user->setEmail($data['email']);
         $user->setRoles(['ROLE_USER']); 
 
-        // Hachage sécurisé du mot de passe
         $hashedPassword = $passwordHasher->hashPassword($user, $data['password']);
         $user->setPassword($hashedPassword);
 
-        // Sauvegarde dans MySQL
         $em->persist($user);
         $em->flush();
 
@@ -54,12 +56,34 @@ class UserApiController extends AbstractController
         return $response;
     }
 
-    // 2. ROUTE FANTÔME DE CONNEXION (LOGIN)
-    // C'est celle que notre "security.yaml" (json_login) va écouter en tâche de fond.
-    #[Route('/api/login', name: 'api_login', methods: ['POST'])]
-    public function login(): JsonResponse
+    #[Route('/api/login', name: 'api_login', methods: ['POST', 'OPTIONS'])]
+    public function login(Request $request): JsonResponse
     {
-        // On laisse vide, Symfony l'intercepte tout seul !
-        return $this->json(['message' => 'Connexion établie.']);
+
+        if ($request->getMethod() === 'OPTIONS') {
+            $response = new JsonResponse();
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+            $response->headers->set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+            return $response;
+        }
+
+        $user = $this->getUser();
+
+        if (!$user) {
+            $response = $this->json(['error' => 'Non authentifié'], Response::HTTP_UNAUTHORIZED);
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            return $response;
+        }
+
+        // 🚀 On renvoie enfin les clés attendues par ton AuthService Angular !
+        $response = $this->json([
+            'message' => 'Connexion établie.',
+            'id' => $user->getId(),
+            'nom' => $user->getNom() 
+        ]);
+        
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
     }
 }
