@@ -10,10 +10,12 @@ export class AuthService {
   private apiUrl = 'http://localhost:8000/api'; 
 
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasUserId());
-  private userNameSubject = new BehaviorSubject<string | null>(localStorage.getItem('userName'));
+  private userNameSubject  = new BehaviorSubject<string | null>(localStorage.getItem('userName'));
+  private isAdminSubject   = new BehaviorSubject<boolean>(localStorage.getItem('isAdmin') === 'true');
 
-  isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
-  userName$: Observable<string | null> = this.userNameSubject.asObservable();
+  isLoggedIn$: Observable<boolean>       = this.isLoggedInSubject.asObservable();
+  userName$:   Observable<string | null> = this.userNameSubject.asObservable();
+  isAdmin$:    Observable<boolean>       = this.isAdminSubject.asObservable();
 
   constructor(private http: HttpClient) {} // 👈 Injection du client HTTP
 
@@ -52,6 +54,11 @@ export class AuthService {
           localStorage.setItem('userName', name);
           this.userNameSubject.next(name);
         }
+
+        const isAdmin = response?.isAdmin === true;
+        localStorage.setItem('isAdmin', isAdmin ? 'true' : 'false');
+        this.isAdminSubject.next(isAdmin);
+
         console.log("-------------------");
       })
     );
@@ -60,7 +67,13 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('userId');
     localStorage.removeItem('userName');
+    localStorage.removeItem('isAdmin');
     this.isLoggedInSubject.next(false);
     this.userNameSubject.next(null);
+    this.isAdminSubject.next(false);
+  }
+
+  isAdmin(): boolean {
+    return localStorage.getItem('isAdmin') === 'true';
   }
 }

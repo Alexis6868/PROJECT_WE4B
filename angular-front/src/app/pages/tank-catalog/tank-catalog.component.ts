@@ -8,28 +8,45 @@ import { TankCardComponent } from '../../components/tank-card/tank-card.componen
   selector: 'app-tank-catalog',
   standalone: true,
   imports: [CommonModule, SearchBarComponent, TankCardComponent],
-  templateUrl: './tank-catalog.component.html'
+  templateUrl: './tank-catalog.component.html',
+  styleUrl: './tank-catalog.component.css'
 })
 export class TankCatalogComponent implements OnInit {
-  allTanks: any[] = [];      
-  filteredTanks: any[] = []; 
-  
+  allTanks: any[] = [];
+  filteredTanks: any[] = [];
+  availableCountries: string[] = [];
+  errorMessage: string = '';
 
   currentSearchTerm: string = '';
-  currentSort: string = 'nom'; 
+  currentSort: string = 'nom';
+  currentPays: string = '';
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.apiService.getTanks().subscribe((data) => {
-      this.allTanks = data;
-      this.applyFilterAndSort(); 
+    this.apiService.getTanks().subscribe({
+      next: (data) => {
+        this.allTanks = data;
+        this.availableCountries = [...new Set(
+          data.map((t: any) => t.pays).filter((p: any) => !!p)
+        )].sort();
+        this.applyFilterAndSort();
+      },
+      error: (err) => {
+        console.error('Erreur chargement catalogue :', err);
+        this.errorMessage = 'Impossible de charger le catalogue. Vérifiez que le serveur est démarré.';
+      }
     });
   }
 
 
   filterCatalog(searchTerm: string) {
     this.currentSearchTerm = searchTerm;
+    this.applyFilterAndSort();
+  }
+
+  filterByPays(pays: string) {
+    this.currentPays = pays;
     this.applyFilterAndSort();
   }
 
@@ -42,8 +59,9 @@ export class TankCatalogComponent implements OnInit {
 
   private applyFilterAndSort() {
 
-    let temp = this.allTanks.filter(tank => 
-      tank.nom.toLowerCase().includes(this.currentSearchTerm.toLowerCase())
+    let temp = this.allTanks.filter(tank =>
+      tank.nom.toLowerCase().includes(this.currentSearchTerm.toLowerCase()) &&
+      (!this.currentPays || tank.pays === this.currentPays)
     );
 
     if (this.currentSort === 'nom') {

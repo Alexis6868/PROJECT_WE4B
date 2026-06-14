@@ -79,8 +79,9 @@ class UserApiController extends AbstractController
         // 🚀 On renvoie enfin les clés attendues par ton AuthService Angular !
         $response = $this->json([
             'message' => 'Connexion établie.',
-            'id' => $user->getId(),
-            'nom' => $user->getNom() 
+            'id'      => $user->getId(),
+            'nom'     => $user->getNom(),
+            'isAdmin' => in_array('ROLE_ADMIN', $user->getRoles()),
         ]);
         
         $response->headers->set('Access-Control-Allow-Origin', '*');

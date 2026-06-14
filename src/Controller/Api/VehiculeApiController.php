@@ -27,8 +27,9 @@ class VehiculeApiController extends AbstractController
 
         foreach ($vehicules as $vehicule) {
             $data[] = [
-                'id' => $vehicule->getId(),
-                'nom' => $vehicule->getNom(),
+                'id'   => $vehicule->getId(),
+                'nom'  => $vehicule->getNom(),
+                'pays' => $vehicule->getPays(),
                 'type' => $vehicule->getType(),
                 'masse' => $vehicule->getMasse(),
                 'image' => $vehicule->getImage(),

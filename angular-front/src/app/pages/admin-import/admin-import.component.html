@@ -1,0 +1,81 @@
+<div class="admin-container">
+  <h1>🔍 Import IA — Ajouter un char</h1>
+  <p class="subtitle">Recherche automatique via Gemini AI + Wikipedia</p>
+
+  <!-- Formulaire de recherche -->
+  <div class="search-form" *ngIf="etat !== 'saved'">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Ex: Tigre II, T-34, Abrams..."
+      class="search-input"
+      (keyup.enter)="rechercher()"
+      [disabled]="etat === 'loading' || etat === 'saving'"
+    />
+    <button
+      (click)="rechercher()"
+      class="btn-search"
+      [disabled]="!searchTerm.trim() || etat === 'loading' || etat === 'saving'"
+    >
+      {{ etat === 'loading' ? 'Recherche...' : 'Rechercher avec l\'IA' }}
+    </button>
+  </div>
+
+  <!-- Chargement -->
+  <div class="status loading" *ngIf="etat === 'loading'">
+    <div class="spinner"></div>
+    <p>L'IA recherche les informations sur <strong>{{ searchTerm }}</strong>…</p>
+  </div>
+
+  <!-- Non trouvé -->
+  <div class="status error" *ngIf="etat === 'notfound' || etat === 'error'">
+    <p>⚠️ {{ errorMessage }}</p>
+    <button (click)="reset()" class="btn-reset">Nouvelle recherche</button>
+  </div>
+
+  <!-- Prévisualisation trouvée -->
+  <div class="preview-card" *ngIf="etat === 'found' && tankPreview">
+    <h2>Char trouvé — vérifiez les informations</h2>
+
+    <div class="preview-layout">
+      <div class="preview-image">
+        <img
+          [src]="tankPreview.image"
+          [alt]="tankPreview.nom"
+          *ngIf="tankPreview.image"
+          (error)="tankPreview.image = ''"
+        />
+        <div class="no-image" *ngIf="!tankPreview.image">Pas d'image disponible</div>
+      </div>
+
+      <div class="preview-info">
+        <div class="info-row"><span class="label">Nom</span><span>{{ tankPreview.nom }}</span></div>
+        <div class="info-row"><span class="label">Pays</span><span>{{ tankPreview.pays || '—' }}</span></div>
+        <div class="info-row"><span class="label">Type</span><span>{{ tankPreview.type }}</span></div>
+        <div class="info-row"><span class="label">Masse</span><span>{{ tankPreview.masse }} tonnes</span></div>
+        <div class="info-row"><span class="label">Description</span><span>{{ tankPreview.description }}</span></div>
+        <div class="info-row muted"><span class="label">État</span><span>Opérationnel (défaut)</span></div>
+        <div class="info-row muted"><span class="label">Maintenance</span><span>80 / 100 (défaut)</span></div>
+      </div>
+    </div>
+
+    <div class="preview-actions">
+      <button (click)="confirmerImport()" class="btn-confirm">
+        ✅ Confirmer et importer en BDD
+      </button>
+      <button (click)="reset()" class="btn-cancel">Annuler</button>
+    </div>
+  </div>
+
+  <!-- Enregistrement en cours -->
+  <div class="status loading" *ngIf="etat === 'saving'">
+    <div class="spinner"></div>
+    <p>Enregistrement en base de données…</p>
+  </div>
+
+  <!-- Succès -->
+  <div class="status success" *ngIf="etat === 'saved'">
+    <p>✅ <strong>{{ importedNom }}</strong> a été ajouté au catalogue avec succès !</p>
+    <button (click)="reset()" class="btn-reset">Importer un autre char</button>
+  </div>
+</div>

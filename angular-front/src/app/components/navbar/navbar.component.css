@@ -37,3 +37,13 @@
   border-bottom: 2px solid #ff9f43;
   padding-bottom: 5px;
 }
+
+.admin-link {
+  background: #7c3aed;
+  color: white !important;
+  padding: 4px 12px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.admin-link:hover { background: #6d28d9; color: white !important; }
