@@ -1,0 +1,135 @@
+.register-page {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+}
+
+.register-page .row {
+  width: 100%;
+}
+
+.register-page .col-md-6 {
+  width: 100%;
+  max-width: 980px;
+  flex: 0 0 100%;
+}
+
+.register-page .card {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  overflow: hidden;
+  background: var(--paper-soft);
+  border: 1px solid var(--border-green) !important;
+  border-radius: 14px;
+  color: var(--text-body);
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.register-page .card::before {
+  content: "";
+  display: block;
+  min-height: 100%;
+  background:
+    linear-gradient(rgba(3, 23, 13, 0.7), rgba(3, 23, 13, 0.7)),
+    url('https://images.pexels.com/photos/31448119/pexels-photo-31448119.jpeg');
+  background-size: cover;
+  background-position: center;
+}
+
+.register-page .card-body {
+  padding: 40px !important;
+}
+
+.register-page h2 {
+  color: var(--text-dark);
+  font-weight: 800;
+  line-height: 1.18;
+}
+
+.register-page .mb-3 {
+  margin-bottom: 18px !important;
+}
+
+.register-page .form-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--black-forest);
+  font-weight: 800;
+}
+
+.register-page .form-control {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  color: var(--text-dark);
+  background: var(--text-light);
+  border: 1px solid var(--border-dark-green);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.register-page .form-control:focus {
+  border-color: var(--malachite);
+  box-shadow: var(--focus-ring);
+}
+
+.register-page .btn-primary {
+  border: 0;
+  padding: 15px 18px;
+  color: var(--cta-text);
+  background: var(--malachite);
+  border-radius: 8px;
+  font-weight: 800;
+  box-shadow: var(--shadow-cta);
+}
+
+.register-page .btn-primary:hover:not(:disabled) {
+  background: var(--malachite-hover);
+}
+
+.register-page .btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.register-page .text-danger {
+  color: var(--danger-text) !important;
+  font-weight: 700;
+}
+
+.register-page .text-muted {
+  color: var(--text-body) !important;
+}
+
+.register-page a {
+  color: var(--black-forest) !important;
+  font-weight: 800;
+}
+
+.register-page .alert-info {
+  color: var(--text-light);
+  background: var(--sea-green);
+  border: 0;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .register-page {
+    padding: 32px 14px;
+  }
+
+  .register-page .card {
+    grid-template-columns: 1fr;
+  }
+
+  .register-page .card::before {
+    min-height: 150px;
+  }
+
+  .register-page .card-body {
+    padding: 30px 24px !important;
+  }
+}
