@@ -57,3 +57,57 @@
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   gap: 22px;
 }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  min-width: 38px;
+  height: 38px;
+  padding: 0 10px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text-2);
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.page-btn:hover:not(:disabled) {
+  border-color: var(--orange);
+  color: var(--text);
+}
+.page-btn--active {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+.page-btn--nav {
+  font-size: 1rem;
+}
+.page-btn:disabled {
+  opacity: .3;
+  cursor: not-allowed;
+}
+
+.page-ellipsis {
+  color: var(--text-3);
+  font-size: .85rem;
+  padding: 0 4px;
+  line-height: 38px;
+}
+
+.results-count {
+  text-align: center;
+  margin-top: 14px;
+  font-size: .78rem;
+  color: var(--text-3);
+  letter-spacing: .04em;
+}

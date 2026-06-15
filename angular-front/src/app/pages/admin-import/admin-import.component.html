@@ -79,3 +79,111 @@
     <button (click)="reset()" class="btn-reset">Importer un autre char</button>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════
+     CRUD — Gestion des blindés
+     ═══════════════════════════════════════════════════ -->
+<div class="crud-container">
+
+  <div class="crud-header">
+    <div>
+      <h2 class="crud-title">Gestion des blindés</h2>
+      <p class="crud-sub">{{ crudVehicles.length }} véhicules en base</p>
+    </div>
+    <input class="crud-search" type="text" [(ngModel)]="crudFilter" placeholder="Filtrer par nom ou pays…">
+  </div>
+
+  <div *ngIf="crudMsg" class="crud-msg" [class.crud-msg--err]="crudMsgType === 'err'">{{ crudMsg }}</div>
+
+  <!-- Loading -->
+  <div *ngIf="crudLoading" class="status loading" style="margin:0">
+    <div class="spinner"></div>
+    <p>Chargement…</p>
+  </div>
+
+  <!-- Table -->
+  <div *ngIf="!crudLoading" class="crud-table-wrap">
+    <table class="crud-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Nom</th>
+          <th>Type</th>
+          <th>Pays</th>
+          <th>Masse</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let v of filteredVehicles">
+
+          <!-- Ligne normale -->
+          <tr *ngIf="editingVehicle?.id !== v.id">
+            <td class="td-img">
+              <img *ngIf="v.image" [src]="v.image" [alt]="v.nom">
+              <div *ngIf="!v.image" class="td-noimg">—</div>
+            </td>
+            <td class="td-nom">{{ v.nom }}</td>
+            <td><span class="badge-type">{{ v.type }}</span></td>
+            <td>{{ v.pays || '—' }}</td>
+            <td>{{ v.masse }} t</td>
+            <td class="td-actions">
+              <button class="btn-edit" (click)="startEdit(v)">Modifier</button>
+              <button *ngIf="deleteConfirmId !== v.id" class="btn-del" (click)="askDelete(v.id)">Supprimer</button>
+              <ng-container *ngIf="deleteConfirmId === v.id">
+                <button class="btn-del-confirm" (click)="confirmDelete(v.id)">Confirmer</button>
+                <button class="btn-cancel-sm" (click)="cancelDelete()">Annuler</button>
+              </ng-container>
+            </td>
+          </tr>
+
+          <!-- Ligne édition inline -->
+          <tr *ngIf="editingVehicle?.id === v.id" class="tr-edit">
+            <td colspan="6">
+              <div class="edit-panel">
+                <div class="edit-grid">
+                  <div class="edit-field">
+                    <label>Nom</label>
+                    <input type="text" [(ngModel)]="editingVehicle.nom">
+                  </div>
+                  <div class="edit-field">
+                    <label>Type</label>
+                    <select [(ngModel)]="editingVehicle.type">
+                      <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+                    </select>
+                  </div>
+                  <div class="edit-field">
+                    <label>Pays</label>
+                    <input type="text" [(ngModel)]="editingVehicle.pays">
+                  </div>
+                  <div class="edit-field">
+                    <label>Masse (t)</label>
+                    <input type="number" [(ngModel)]="editingVehicle.masse">
+                  </div>
+                  <div class="edit-field edit-field--full">
+                    <label>Description</label>
+                    <textarea [(ngModel)]="editingVehicle.description" rows="2"></textarea>
+                  </div>
+                  <div class="edit-field edit-field--full">
+                    <label>URL Image</label>
+                    <input type="text" [(ngModel)]="editingVehicle.image">
+                  </div>
+                </div>
+                <div class="edit-actions">
+                  <button class="btn-confirm" (click)="saveEdit()">Enregistrer</button>
+                  <button class="btn-cancel" (click)="cancelEdit()">Annuler</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+        </ng-container>
+
+        <tr *ngIf="filteredVehicles.length === 0">
+          <td colspan="6" class="td-empty">Aucun résultat</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

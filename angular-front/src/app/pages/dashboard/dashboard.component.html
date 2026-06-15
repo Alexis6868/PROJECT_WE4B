@@ -1,0 +1,153 @@
+<div class="dash-container">
+  <div class="dash-top">
+    <div>
+      <h1>📊 Tableau de bord</h1>
+      <p class="subtitle">Suivi & analyse des performances TankRent</p>
+    </div>
+    <button class="btn-refresh" (click)="loadStats()" [disabled]="loading">↺ Actualiser</button>
+  </div>
+
+  <div *ngIf="loading" class="dash-loading">
+    <div class="spinner"></div>
+    <p>Chargement des données…</p>
+  </div>
+
+  <ng-container *ngIf="!loading && kpi">
+
+    <!-- ═══════════════════════════════════════
+         KPI CARDS
+    ════════════════════════════════════════ -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-icon">🚀</span>
+        <div class="kpi-value">{{ kpi.total_vehicles }}</div>
+        <div class="kpi-label">Blindés au catalogue</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-icon">📋</span>
+        <div class="kpi-value">{{ kpi.total_reservations }}</div>
+        <div class="kpi-label">Réservations totales</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-icon">👤</span>
+        <div class="kpi-value">{{ kpi.total_users }}</div>
+        <div class="kpi-label">Utilisateurs inscrits</div>
+      </div>
+      <div class="kpi-card kpi-card--orange">
+        <span class="kpi-icon">🔐</span>
+        <div class="kpi-value">{{ kpi.logins_last_7_days }}</div>
+        <div class="kpi-label">Connexions (7 jours)</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-icon">📁</span>
+        <div class="kpi-value">{{ kpi.total_files }}</div>
+        <div class="kpi-label">Fichiers uploadés</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-icon">💾</span>
+        <div class="kpi-value">{{ formatBytes(kpi.total_storage) }}</div>
+        <div class="kpi-label">Stockage utilisé</div>
+      </div>
+      <div class="kpi-card kpi-card--blue">
+        <span class="kpi-icon">💰</span>
+        <div class="kpi-value">{{ kpi.avg_reservation | number:'1.0-0' }} €</div>
+        <div class="kpi-label">Réservation moyenne</div>
+      </div>
+      <div class="kpi-card kpi-card--green">
+        <span class="kpi-icon">💵</span>
+        <div class="kpi-value">{{ kpi.revenue_total | number:'1.0-0' }} €</div>
+        <div class="kpi-label">Revenus totaux</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         CHARTS ROW 1 : Types + Réservations
+    ════════════════════════════════════════ -->
+    <div class="charts-row charts-row--2">
+      <div class="chart-card">
+        <h3 class="chart-title">Répartition des blindés par type</h3>
+        <div class="chart-wrap chart-wrap--sm">
+          <canvas #chartTypes></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3 class="chart-title">Réservations & Revenus par mois</h3>
+        <div class="chart-wrap">
+          <canvas #chartMonths></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         CHARTS ROW 2 : Connexions + Actions
+    ════════════════════════════════════════ -->
+    <div class="charts-row charts-row--2">
+      <div class="chart-card">
+        <h3 class="chart-title">Connexions par jour (14 derniers jours)</h3>
+        <div class="chart-wrap">
+          <canvas #chartLogins></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3 class="chart-title">Répartition des actions (total)</h3>
+        <div class="chart-wrap">
+          <canvas #chartActions></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         JOURNAL D'ACTIVITÉ
+    ════════════════════════════════════════ -->
+    <div class="log-section">
+      <div class="log-header">
+        <h2 class="log-title">Journal d'activité</h2>
+        <div class="log-filters">
+          <input
+            class="log-search"
+            type="text"
+            [(ngModel)]="filterText"
+            (ngModelChange)="applyFilter()"
+            placeholder="Email, action…"
+          >
+          <select class="log-select" [(ngModel)]="filterAction" (ngModelChange)="applyFilter()">
+            <option *ngFor="let opt of actionOptions" [value]="opt.value">{{ opt.label }}</option>
+          </select>
+        </div>
+      </div>
+      <p class="log-count">{{ filteredLogs.length }} entrée(s)</p>
+
+      <div class="log-table-wrap">
+        <table class="log-table">
+          <thead>
+            <tr>
+              <th class="th-sort" (click)="sortBy('id')"># {{ sortIcon('id') }}</th>
+              <th class="th-sort" (click)="sortBy('action')">Action {{ sortIcon('action') }}</th>
+              <th class="th-sort" (click)="sortBy('userEmail')">Email {{ sortIcon('userEmail') }}</th>
+              <th>Détails</th>
+              <th class="th-sort" (click)="sortBy('createdAt')">Date {{ sortIcon('createdAt') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of filteredLogs">
+              <td class="td-id">{{ log.id?.slice(-6) }}</td>
+              <td>
+                <span class="action-badge" [ngClass]="actionBadgeClass(log.action)">{{ log.action }}</span>
+              </td>
+              <td class="td-email">{{ log.userEmail || '—' }}</td>
+              <td class="td-details">
+                <span *ngIf="log.details" class="details-json">{{ log.details | json }}</span>
+                <span *ngIf="!log.details" class="text-muted">—</span>
+              </td>
+              <td class="td-date">{{ log.createdAt }}</td>
+            </tr>
+            <tr *ngIf="filteredLogs.length === 0">
+              <td colspan="5" class="td-empty">Aucun résultat</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </ng-container>
+</div>

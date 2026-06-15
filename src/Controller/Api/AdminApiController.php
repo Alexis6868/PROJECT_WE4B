@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Vehicule;
 use App\Repository\EntrepotRepository;
 use App\Service\GeminiService;
+use App\Service\LogService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,7 +37,8 @@ class AdminApiController extends AbstractController
     public function importVehicule(
         Request $request,
         EntityManagerInterface $em,
-        EntrepotRepository $entrepotRepo
+        EntrepotRepository $entrepotRepo,
+        LogService $logService
     ): JsonResponse {
         if ($request->getMethod() === 'OPTIONS') {
             return $this->corsResponse();
@@ -64,7 +66,13 @@ class AdminApiController extends AbstractController
         $em->persist($vehicule);
         $em->flush();
 
-        // Invalider le cache Angular côté API (rien à faire côté PHP, c'est géré côté client)
+        $logUserId    = (int) $request->headers->get('X-User-Id') ?: null;
+        $logUserEmail = $request->headers->get('X-User-Email');
+        $logService->log('CREATE_VEHICLE', $logUserId, $logUserEmail, [
+            'id'  => $vehicule->getId(),
+            'nom' => $vehicule->getNom(),
+        ]);
+
         return $this->jsonWithCors([
             'success' => true,
             'id'      => $vehicule->getId(),

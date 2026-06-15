@@ -11,10 +11,12 @@
     </ng-container>
 
     <ng-container *ngIf="authService.isLoggedIn$ | async">
-      <a *ngIf="authService.isAdmin$ | async"
-         routerLink="/admin/import-ia"
-         routerLinkActive="active"
-         class="admin-link">Admin IA</a>
+      <a routerLink="/admin/fichiers" routerLinkActive="active" class="admin-link">Fichiers</a>
+
+      <ng-container *ngIf="authService.isAdmin$ | async">
+        <a routerLink="/admin/import-ia"  routerLinkActive="active" class="admin-link">Admin IA</a>
+        <a routerLink="/admin/dashboard"  routerLinkActive="active" class="admin-link">Dashboard</a>
+      </ng-container>
 
       <span class="user-name">
         Pilote&nbsp;: <strong>{{ authService.userName$ | async }}</strong>

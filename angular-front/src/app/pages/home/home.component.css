@@ -88,6 +88,8 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  padding-right: 6px;
+  margin-right: -6px;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -164,13 +166,13 @@
   color: var(--text-2);
 }
 
-.feature-bar {
+/* .feature-bar {
   height: 2px;
   background: linear-gradient(90deg, var(--orange) 0%, transparent 100%);
   border-radius: 2px;
   width: 0;
   transition: width .5s cubic-bezier(.22,1,.36,1);
-}
+} */
 
 .feature-card:hover .feature-bar {
   width: 100%;

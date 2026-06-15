@@ -41,4 +41,34 @@ export class ApiService {
     this.tanksCache$ = null;
     return this.http.post(`${this.apiUrl}/api/admin/vehicules/import`, tankData);
   }
+
+  updateTank(id: number, data: any): Observable<any> {
+    this.tanksCache$ = null;
+    return this.http.put(`${this.apiUrl}/api/admin/vehicules/${id}`, data);
+  }
+
+  deleteTank(id: number): Observable<any> {
+    this.tanksCache$ = null;
+    return this.http.delete(`${this.apiUrl}/api/admin/vehicules/${id}`);
+  }
+
+  uploadFile(file: File, userId: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('userId', userId);
+    return this.http.post(`${this.apiUrl}/api/fichiers/upload`, formData);
+  }
+
+  getFiles(userId?: string): Observable<any[]> {
+    const params = userId ? `?userId=${userId}` : '';
+    return this.http.get<any[]>(`${this.apiUrl}/api/fichiers${params}`);
+  }
+
+  deleteFile(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/fichiers/${id}`);
+  }
+
+  getStats(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/admin/stats`);
+  }
 }

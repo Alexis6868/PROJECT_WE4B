@@ -25,3 +25,8 @@ services:
     App\Service\GeminiService:
         arguments:
             $geminiApiKey: '%env(GEMINI_API_KEY)%'
+
+    App\Service\MongoService:
+        arguments:
+            $mongoUrl: '%env(MONGODB_URL)%'
+            $mongoDb: '%env(MONGODB_DB)%'
