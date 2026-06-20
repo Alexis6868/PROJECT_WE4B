@@ -58,6 +58,10 @@ export class AuthService {
         localStorage.setItem('isAdmin', isAdmin ? 'true' : 'false');
         this.isAdminSubject.next(isAdmin);
 
+        // Stocke l'email pour les logs (intercepteur HTTP)
+        const email = response?.email ?? '';
+        if (email) localStorage.setItem('userEmail', email);
+
         console.log("-------------------");
       })
     );
@@ -67,6 +71,7 @@ export class AuthService {
     localStorage.removeItem('userId');
     localStorage.removeItem('userName');
     localStorage.removeItem('isAdmin');
+    localStorage.removeItem('userEmail');
     this.isLoggedInSubject.next(false);
     this.userNameSubject.next(null);
     this.isAdminSubject.next(false);

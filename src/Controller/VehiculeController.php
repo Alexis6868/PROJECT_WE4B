@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Vehicule;
 use App\Form\VehiculeType;
 use App\Repository\VehiculeRepository;
+use App\Service\LogService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/vehicule')]
 final class VehiculeController extends AbstractController
 {
+    public function __construct(private LogService $logService) {}
     #[Route(name: 'app_vehicule_index', methods: ['GET'])]
     public function index(VehiculeRepository $vehiculeRepository): Response
     {
@@ -32,6 +34,12 @@ final class VehiculeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($vehicule);
             $entityManager->flush();
+
+            $user = $this->getUser();
+            $this->logService->log('CREATE_VEHICLE', $user?->getId(), $user?->getUserIdentifier(), [
+                'id'  => $vehicule->getId(),
+                'nom' => $vehicule->getNom(),
+            ]);
 
             return $this->redirectToRoute('app_vehicule_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -59,6 +67,12 @@ final class VehiculeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $user = $this->getUser();
+            $this->logService->log('EDIT_VEHICLE', $user?->getId(), $user?->getUserIdentifier(), [
+                'id'  => $vehicule->getId(),
+                'nom' => $vehicule->getNom(),
+            ]);
+
             return $this->redirectToRoute('app_vehicule_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -72,6 +86,11 @@ final class VehiculeController extends AbstractController
     public function delete(Request $request, Vehicule $vehicule, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$vehicule->getId(), $request->getPayload()->getString('_token'))) {
+            $user = $this->getUser();
+            $this->logService->log('DELETE_VEHICLE', $user?->getId(), $user?->getUserIdentifier(), [
+                'id'  => $vehicule->getId(),
+                'nom' => $vehicule->getNom(),
+            ]);
             $entityManager->remove($vehicule);
             $entityManager->flush();
         }

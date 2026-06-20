@@ -1,4 +1,10 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
 .card {
+  height: 100%;
   background: var(--bg-2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -68,11 +74,14 @@
   align-items: flex-end;
   padding: 14px;
   opacity: 0;
-  transition: opacity .35s ease;
+  transition: opacity .18s ease;
   z-index: 3;
 }
 .card:hover .card-overlay {
   opacity: 1;
+}
+.card-overlay-btn {
+  transform: none;
 }
 
 .card-overlay-btn {

@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\User;
+use App\Service\LogService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,6 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class UserApiController extends AbstractController
 {
+    public function __construct(private LogService $logService) {}
     #[Route('/api/register', name: 'api_register', methods: ['POST', 'OPTIONS'])]
     public function register(
         Request $request, 
@@ -76,11 +78,16 @@ class UserApiController extends AbstractController
             return $response;
         }
 
+        if ($user instanceof User) {
+            $this->logService->log('LOGIN', $user->getId(), $user->getUserIdentifier());
+        }
+
         // 🚀 On renvoie enfin les clés attendues par ton AuthService Angular !
         $response = $this->json([
             'message' => 'Connexion établie.',
             'id'      => $user->getId(),
             'nom'     => $user->getNom(),
+            'email'   => $user->getUserIdentifier(),
             'isAdmin' => in_array('ROLE_ADMIN', $user->getRoles()),
         ]);
         

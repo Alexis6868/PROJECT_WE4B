@@ -1,0 +1,80 @@
+<div class="fu-container">
+  <h1>📁 Gestion des fichiers</h1>
+  <p class="subtitle">Upload de documents liés à vos opérations TankRent</p>
+
+  <!-- Formulaire upload -->
+  <form class="upload-card" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>Déposer un fichier</h2>
+
+    <label class="drop-zone" [class.drop-zone--error]="!!fileError">
+      <input type="file" class="drop-zone__input" (change)="onFileChange($event)">
+      <div class="drop-zone__body">
+        <span class="drop-icon">📎</span>
+        <span *ngIf="!selectedFile" class="drop-hint">
+          Cliquez ou déposez un fichier<br>
+          <small>JPG, PNG, GIF, PDF, DOC, DOCX — max 5 Mo</small>
+        </span>
+        <span *ngIf="selectedFile" class="drop-selected">
+          {{ selectedFile.name }} ({{ formatSize(selectedFile.size) }})
+        </span>
+      </div>
+    </label>
+
+    <p *ngIf="fileError" class="field-error">⚠️ {{ fileError }}</p>
+
+    <div *ngIf="uploadMsg" class="upload-msg" [class.upload-msg--err]="uploadMsgType === 'err'">
+      {{ uploadMsg }}
+    </div>
+
+    <button
+      type="submit"
+      class="btn-upload"
+      [disabled]="!selectedFile || !!fileError || uploading"
+    >
+      {{ uploading ? 'Envoi en cours…' : 'Envoyer le fichier' }}
+    </button>
+  </form>
+
+  <!-- Liste des fichiers -->
+  <div class="files-section">
+    <h2>Mes fichiers</h2>
+
+    <div *ngIf="loading" class="files-loading">
+      <div class="spinner"></div>
+      <p>Chargement…</p>
+    </div>
+
+    <div *ngIf="!loading && files.length === 0" class="files-empty">
+      Aucun fichier uploadé pour l'instant.
+    </div>
+
+    <div *ngIf="!loading && files.length > 0" class="files-table-wrap">
+      <table class="files-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Type</th>
+            <th>Taille</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let f of files">
+            <td class="td-name">
+              <span class="file-icon">{{ mimeIcon(f.mimeType) }}</span>
+              {{ f.originalName }}
+            </td>
+            <td><span class="mime-badge">{{ f.mimeType }}</span></td>
+            <td>{{ formatSize(f.size) }}</td>
+            <td>{{ f.uploadedAt }}</td>
+            <td class="td-actions">
+              <a [href]="fileUrl(f.id)" target="_blank" rel="noopener" class="btn-open">Ouvrir</a>
+              <button class="btn-del" (click)="deleteFile(f.id)">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

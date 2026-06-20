@@ -1,0 +1,5 @@
+{
+  "typescript.tsdk": "angular-front/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "js/ts.tsdk.path": "angular-front/node_modules/typescript/lib"
+}

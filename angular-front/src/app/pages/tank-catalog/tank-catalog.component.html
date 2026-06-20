@@ -20,7 +20,22 @@
   </div>
 
   <div class="tanks-grid">
-    <app-tank-card *ngFor="let unTank of filteredTanks" [tank]="unTank"></app-tank-card>
+    <app-tank-card *ngFor="let unTank of pagedTanks" [tank]="unTank"></app-tank-card>
   </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="page-btn page-btn--nav" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">&#8592;</button>
+
+    <ng-container *ngFor="let p of pageNumbers">
+      <button *ngIf="p !== '…'" class="page-btn" [class.page-btn--active]="p === currentPage" (click)="goToPage(+p)">{{ p }}</button>
+      <span *ngIf="p === '…'" class="page-ellipsis">…</span>
+    </ng-container>
+
+    <button class="page-btn page-btn--nav" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">&#8594;</button>
+  </div>
+
+  <p class="results-count" *ngIf="filteredTanks.length > 0">
+    {{ pageStart }}–{{ pageEnd }} sur {{ filteredTanks.length }} blindés
+  </p>
 
 </div>

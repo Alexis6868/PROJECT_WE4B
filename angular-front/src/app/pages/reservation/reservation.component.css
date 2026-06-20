@@ -107,6 +107,14 @@
   color: var(--text);
 }
 .resa-tank-specs { display: flex; gap: 24px; }
+.resa-tank-desc {
+  margin: 18px 0 0;
+  font-size: .9rem;
+  line-height: 1.7;
+  color: var(--text-2);
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
 .spec { display: flex; flex-direction: column; gap: 3px; }
 .spec-label {
   font-size: .68rem;

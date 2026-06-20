@@ -93,14 +93,14 @@ export class HeroSectionComponent implements AfterViewInit, OnDestroy {
     this.renderer.setSize(w, h);
     this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.7;
 
     // Scene + fog — slightly lighter deep blue-dark
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x10101e);
-    this.scene.fog = new THREE.Fog(0x10101e, 20, 42);
+    this.scene.fog = new THREE.Fog(0x10101e, 20, 55);
 
     // Camera — starts far for GSAP zoom
     this.camera = new THREE.PerspectiveCamera(44, w / h, 0.1, 100);
@@ -109,6 +109,7 @@ export class HeroSectionComponent implements AfterViewInit, OnDestroy {
 
     this.setupLights();
     this.scene.add(this.buildGround());
+    this.buildCity();
     this.particles = this.buildParticles();
     this.scene.add(this.particles);
 
@@ -129,48 +130,40 @@ export class HeroSectionComponent implements AfterViewInit, OnDestroy {
 
   private async loadTankModel(): Promise<void> {
     try {
-      const { GLTFLoader } = await import('three/examples/jsm/loaders/GLTFLoader.js');
+      const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js');
+      const loader = new GLTFLoader();
+      const gltf = await loader.loadAsync('assets/amx_56_lowpoly.glb');
+      const group = gltf.scene;
 
-const loader = new GLTFLoader();
-
-const gltf = await loader.loadAsync('assets/amx_56_lowpoly.glb');
-
-// le modèle 3D est dans gltf.scene
-const group = gltf.scene;
-
-      // Apply dark metallic material to all meshes
-      const darkMat = new THREE.MeshStandardMaterial({
-        color: 0x1e2232, metalness: 0.82, roughness: 0.28,
-      });
-      const accentMat = new THREE.MeshStandardMaterial({
-        color: 0xff7a00, metalness: 0.9, roughness: 0.12,
-        emissive: new THREE.Color(0xff4400), emissiveIntensity: 0.4,
-      });
-      let meshIndex = 0;
+      // Keep original GLB materials — just enable shadows
       group.traverse((obj: THREE.Object3D) => {
         if (obj instanceof THREE.Mesh) {
-          obj.material = meshIndex % 8 === 0 ? accentMat : darkMat;
           obj.castShadow = true;
           obj.receiveShadow = true;
-          meshIndex++;
+          // Boost metalness/roughness slightly for a premium look
+          if (obj.material instanceof THREE.MeshStandardMaterial) {
+            obj.material.metalness  = Math.max(obj.material.metalness,  0.5);
+            obj.material.roughness  = Math.min(obj.material.roughness,  0.55);
+            obj.material.envMapIntensity = 1.2;
+          }
         }
       });
 
-      // Auto-scale to fit scene (~4 units wide)
+      // Scale to ~7 scene units wide
       const box = new THREE.Box3().setFromObject(group);
       const size = box.getSize(new THREE.Vector3());
       const maxDim = Math.max(size.x, size.y, size.z);
-      if (maxDim > 0) group.scale.setScalar(4 / maxDim);
+      if (maxDim > 0) group.scale.setScalar(7 / maxDim);
 
       // Place on ground
       const box2 = new THREE.Box3().setFromObject(group);
       group.position.y = -box2.min.y - 0.34;
-      group.rotation.y = Math.PI / 7;
+      group.rotation.y = Math.PI / 4;
 
       this.tank = group as unknown as THREE.Group;
       this.scene.add(this.tank);
     } catch (e) {
-      console.warn('USDZ load failed, using procedural tank:', e);
+      console.warn('GLB load failed, using procedural tank:', e);
       this.tank = this.buildTank();
       this.scene.add(this.tank);
     }
@@ -188,7 +181,7 @@ const group = gltf.scene;
     this.scene.add(key);
 
     // Rim — cool blue from upper-right behind
-    const rim = new THREE.DirectionalLight(0x4477ff, 4.5);
+    const rim = new THREE.DirectionalLight(0xffa35c, 4.5);
     rim.position.set(6, 3, -7);
     this.scene.add(rim);
 
@@ -265,6 +258,48 @@ const group = gltf.scene;
     return tank;
   }
 
+  private buildCity(): void {
+    const r = (min: number, max: number) => min + Math.random() * (max - min);
+    const groundY = -0.34;
+
+    const matBase = new THREE.MeshStandardMaterial({ color: 0x04050a, roughness: 0.95, metalness: 0.05 });
+    const matGlow = new THREE.MeshStandardMaterial({
+      color: 0x05060c, roughness: 0.95, metalness: 0.05,
+      emissive: new THREE.Color(0xff7a00), emissiveIntensity: 0.03,
+    });
+    const matGlowBlue = new THREE.MeshStandardMaterial({
+      color: 0x04060e, roughness: 0.95, metalness: 0.05,
+      emissive: new THREE.Color(0x2244bb), emissiveIntensity: 0.05,
+    });
+
+    // Rows pushed deep into the background
+    const rows = [
+      { zMin: -14, zMax: -18, xSpread: 24, count: 14, hMin: 1.5, hMax: 4.0, wMin: 0.8, wMax: 2.0 },
+      { zMin: -19, zMax: -25, xSpread: 30, count: 18, hMin: 2.5, hMax: 7.0, wMin: 1.0, wMax: 2.8 },
+      { zMin: -26, zMax: -33, xSpread: 36, count: 18, hMin: 4.0, hMax: 10.0, wMin: 1.2, wMax: 3.5 },
+      { zMin: -34, zMax: -42, xSpread: 42, count: 16, hMin: 5.0, hMax: 13.0, wMin: 1.5, wMax: 4.5 },
+      { zMin: -43, zMax: -52, xSpread: 48, count: 12, hMin: 6.0, hMax: 16.0, wMin: 2.0, wMax: 5.5 },
+    ];
+
+    for (const row of rows) {
+      for (let i = 0; i < row.count; i++) {
+        const x = r(-row.xSpread / 2, row.xSpread / 2);
+        const z = r(row.zMin, row.zMax);
+        const w = r(row.wMin, row.wMax);
+        const h = r(row.hMin, row.hMax);
+        const d = r(row.wMin, row.wMax);
+
+        const rand = Math.random();
+        const mat = rand < 0.18 ? matGlow : rand < 0.32 ? matGlowBlue : matBase;
+
+        const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+        mesh.position.set(x, groundY + h / 2, z);
+        mesh.receiveShadow = true;
+        this.scene.add(mesh);
+      }
+    }
+  }
+
   private buildGround(): THREE.Mesh {
     const m = new THREE.Mesh(
       new THREE.PlaneGeometry(30, 30),
@@ -300,7 +335,7 @@ const group = gltf.scene;
     const tick = () => {
       this.frameId = requestAnimationFrame(tick);
 
-      if (this.tank) this.tank.rotation.y += 0.0022;
+      if (this.tank) this.tank.rotation.y += 0.0011;
 
       for (let i = 1; i < arr.length; i += 3) {
         arr[i] += 0.004;
